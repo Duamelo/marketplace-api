@@ -1,19 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column/*, OneToMany, ManyToOne*/ } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({name: 'category'})
 export class Category {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
 
     @Column()
     name: string;
-
-    // @Column()
-    // category: Category;
-
-    
-    // @OneToMany(() => Category, (subCategory) =>subCategory.category)
-    // subCategories: Category[];
 }
 export default Category;

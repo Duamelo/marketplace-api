@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { CustomerModule } from '../customer/customer.module';
 import { RegisterBaseServiceModule } from '../common/services/register-base-service/register-base-service.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { VendorModule } from '../vendor/vendor.module';
 
 
 @Module({
@@ -16,6 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     PassportModule,
     RegisterBaseServiceModule,
     CustomerModule,
+    VendorModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
