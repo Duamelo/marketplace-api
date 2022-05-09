@@ -6,7 +6,9 @@ import CreateCustomerDto from './dto/create-customer.dto';
 @Controller('customer')
 export class CustomerController {
 
-    constructor(private customerService: CustomerService){}
+    constructor(
+        private customerService: CustomerService
+        ){}
 
     @HttpCode(200)
     @UseGuards(DoesUserExist)

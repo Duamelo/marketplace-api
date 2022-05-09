@@ -27,10 +27,10 @@ import { CategoryModule } from './modules/category/category.module';
       })
     }),
     DatabaseModule,
+    RegisterBaseServiceModule,
     VendorModule,
     CustomerModule,
     AuthenticationModule,
-    RegisterBaseServiceModule,
     ShopModule,
     ProductModule,
     CategoryModule

@@ -5,33 +5,41 @@ import * as bcrypt from 'bcrypt';
 import { CustomerService } from '../customer/customer.service';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import { TokenPayload } from './interfaces/tokenPayload.interfaces';
+import { VendorService } from '../vendor/vendor.service';
 
 @Injectable()
 export class AuthenticationService {
     constructor(
         private readonly customerService: CustomerService,
+        private readonly vendorService: VendorService,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
         private readonly registerBaseService: RegisterBaseService
     ){ }
 
-    async validateUser(username: string, pass: string) {
+    async validateUser(email: string, pass: string) {
         
         // find if user exist with this email
-        const user = await this.customerService.getByEmail(username);
+        const customer = await this.customerService.getByEmail(email);
+        const vendor = await this.vendorService.getByEmail(email);
 
-        if (!user) {
+
+        console.log("customer")
+        console.log(customer);
+        console.log(vendor);
+        if (!customer && !vendor) {
             return null;
         }
 
-        // find if user password match
-        const match = await this.comparePassword(pass, user.password);
+        // find if customer or vendor password match
+        const match = await this.comparePassword(pass, customer ? customer.password : vendor.password);
+        
         if (!match) {
             return null;
         }
 
         // tslint:disable-next-line: no-string-literal
-        const { password, ...result } = user;
+        const { password, ...result } = customer ? customer : vendor;
 
         return result;
     }

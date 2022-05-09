@@ -1,12 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import GetInfo from '../common/interfaces/getInfo.interface';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import Customer from './customer.entity';
 
 
 @Injectable()
-export class CustomerService {
+export class CustomerService implements GetInfo {
     constructor( 
         @InjectRepository(Customer)
         private readonly customerRepository: Repository<Customer>,

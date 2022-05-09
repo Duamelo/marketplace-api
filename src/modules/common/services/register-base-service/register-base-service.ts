@@ -8,7 +8,6 @@ export class RegisterBaseService {
         private  jwtService: JwtService,
     ){ }
 
-
     public async generateToken(user){
         const {firstName, lastName, email, phone, address} = user;
         console.log("generate token");
