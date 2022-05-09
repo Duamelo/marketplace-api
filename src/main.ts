@@ -29,7 +29,7 @@ SwaggerModule.setup('documentation', app, document);
 
 
 
-  await app.listen(3000);
+  await app.listen(`${process.env.PORT}`);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
