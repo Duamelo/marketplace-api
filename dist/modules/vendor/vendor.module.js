@@ -10,12 +10,22 @@ exports.VendorModule = void 0;
 const common_1 = require("@nestjs/common");
 const vendor_service_1 = require("./vendor.service");
 const vendor_controller_1 = require("./vendor.controller");
+const register_base_service_module_1 = require("../common/services/register-base-service/register-base-service.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const vendor_entity_1 = require("./vendor.entity");
+const customer_module_1 = require("../customer/customer.module");
 let VendorModule = class VendorModule {
 };
 VendorModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            (0, common_1.forwardRef)(() => customer_module_1.CustomerModule),
+            register_base_service_module_1.RegisterBaseServiceModule,
+            typeorm_1.TypeOrmModule.forFeature([vendor_entity_1.default])
+        ],
         providers: [vendor_service_1.VendorService],
-        controllers: [vendor_controller_1.VendorController]
+        controllers: [vendor_controller_1.VendorController],
+        exports: [vendor_service_1.VendorService]
     })
 ], VendorModule);
 exports.VendorModule = VendorModule;

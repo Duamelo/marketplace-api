@@ -15,7 +15,7 @@ let Category = class Category {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Category.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

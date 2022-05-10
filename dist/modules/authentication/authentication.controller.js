@@ -16,6 +16,7 @@ exports.AuthenticationController = void 0;
 const common_1 = require("@nestjs/common");
 const authentication_service_1 = require("./authentication.service");
 const passport_1 = require("@nestjs/passport");
+const jwt_authentication_guard_1 = require("./jwt.authentication.guard");
 let AuthenticationController = class AuthenticationController {
     constructor(authService) {
         this.authService = authService;
@@ -42,6 +43,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthenticationController.prototype, "login", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
     (0, common_1.Post)('logout'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Res)()),

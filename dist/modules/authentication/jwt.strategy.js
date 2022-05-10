@@ -15,8 +15,9 @@ const passport_1 = require("@nestjs/passport");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const customer_service_1 = require("../customer/customer.service");
+const vendor_service_1 = require("../vendor/vendor.service");
 let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
-    constructor(customerService, configService) {
+    constructor(customerService, vendorService, configService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromExtractors([(request) => {
                     var _a;
@@ -26,19 +27,22 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
             secretOrKey: configService.get('JWT_SECRET'),
         });
         this.customerService = customerService;
+        this.vendorService = vendorService;
         this.configService = configService;
     }
     async validate(payload) {
-        const user = await this.customerService.getById(payload.userId);
-        if (!user) {
+        const customer = await this.customerService.getById(payload.userId);
+        const vendor = await this.vendorService.getById(payload.userId);
+        if (!customer && !vendor) {
             throw new common_1.UnauthorizedException('You are not authorized to perform the operation');
         }
-        return user;
+        return customer ? customer : vendor;
     }
 };
 JwtStrategy = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [customer_service_1.CustomerService,
+        vendor_service_1.VendorService,
         config_1.ConfigService])
 ], JwtStrategy);
 exports.JwtStrategy = JwtStrategy;

@@ -10,8 +10,6 @@ export class RegisterBaseService {
 
     public async generateToken(user){
         const {firstName, lastName, email, phone, address} = user;
-        console.log("generate token");
-        console.log(user);
         const token = await this.jwtService.signAsync({firstName, lastName, email, phone, address});
         return token;
     }

@@ -8,12 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DoesUserExist = void 0;
 const common_1 = require("@nestjs/common");
 const customer_service_1 = require("../../customer/customer.service");
+const vendor_service_1 = require("../../vendor/vendor.service");
 let DoesUserExist = class DoesUserExist {
-    constructor(customerService) {
+    constructor(vendorService, customerService) {
+        this.vendorService = vendorService;
         this.customerService = customerService;
     }
     canActivate(context) {
@@ -21,8 +26,9 @@ let DoesUserExist = class DoesUserExist {
         return this.validateRequest(request);
     }
     async validateRequest(request) {
-        const userExist = await this.customerService.getByEmail(request.body.email);
-        if (userExist) {
+        const customer = await this.customerService.getByEmail(request.body.email);
+        const vendor = await this.vendorService.getByEmail(request.body.email);
+        if (customer || vendor) {
             throw new common_1.ForbiddenException('This email already exist');
         }
         return true;
@@ -30,7 +36,10 @@ let DoesUserExist = class DoesUserExist {
 };
 DoesUserExist = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [customer_service_1.CustomerService])
+    __param(0, (0, common_1.Inject)((0, common_1.forwardRef)(() => vendor_service_1.VendorService))),
+    __param(0, (0, common_1.Inject)((0, common_1.forwardRef)(() => customer_service_1.CustomerService))),
+    __metadata("design:paramtypes", [vendor_service_1.VendorService,
+        customer_service_1.CustomerService])
 ], DoesUserExist);
 exports.DoesUserExist = DoesUserExist;
 //# sourceMappingURL=doesUserExist.guard.js.map
