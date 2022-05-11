@@ -5,11 +5,13 @@ import { CustomerController } from './customer.controller';
 import Customer from './customer.entity';
 import { RegisterBaseServiceModule } from '../common/services/register-base-service/register-base-service.module';
 import { VendorModule } from '../vendor/vendor.module';
+import { DatabaseFileModule } from '../database-file/database-file.module';
 
 @Module({
   imports: [
     forwardRef( () => VendorModule),
     RegisterBaseServiceModule,
+    DatabaseFileModule,
     TypeOrmModule.forFeature([Customer])
   ],
   providers: [CustomerService],

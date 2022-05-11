@@ -38,7 +38,7 @@ let VendorService = class VendorService {
         return await this.vendorRepository.findOne({ where: { email } });
     }
     async getById(id) {
-        return await this.vendorRepository.findOne({ where: { id: `${id}` } });
+        return await this.vendorRepository.findOne({ where: { id: id } });
     }
 };
 VendorService = __decorate([

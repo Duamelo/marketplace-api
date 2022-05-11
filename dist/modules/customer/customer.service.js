@@ -17,11 +17,13 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const register_base_service_1 = require("../common/services/register-base-service/register-base-service");
+const database_file_service_1 = require("../database-file/database-file.service");
 const customer_entity_1 = require("./customer.entity");
 let CustomerService = class CustomerService {
-    constructor(customerRepository, registerBaseService) {
+    constructor(customerRepository, registerBaseService, databaseFilesService) {
         this.customerRepository = customerRepository;
         this.registerBaseService = registerBaseService;
+        this.databaseFilesService = databaseFilesService;
     }
     async create(customer) {
         const user = await this.customerRepository.find({ where: { email: customer.email } });
@@ -41,14 +43,22 @@ let CustomerService = class CustomerService {
         return await this.customerRepository.findOne({ where: { email } });
     }
     async getById(id) {
-        return await this.customerRepository.findOne({ where: { id: `${id}` } });
+        return await this.customerRepository.findOne({ where: { id: id } });
+    }
+    async addAvatar(userId, imageBuffer, filename) {
+        const avatar = await this.databaseFilesService.uploadDatabaseFile(imageBuffer, filename);
+        await this.customerRepository.update(userId, {
+            avatarId: avatar.id
+        });
+        return avatar;
     }
 };
 CustomerService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(customer_entity_1.default)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        register_base_service_1.default])
+        register_base_service_1.default,
+        database_file_service_1.default])
 ], CustomerService);
 exports.CustomerService = CustomerService;
 //# sourceMappingURL=customer.service.js.map

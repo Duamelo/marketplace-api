@@ -11,6 +11,7 @@ import { RegisterBaseServiceModule } from './modules/common/services/register-ba
 import { ShopModule } from './modules/shop/shop.module';
 import { ProductModule } from './modules/product/product.module';
 import { CategoryModule } from './modules/category/category.module';
+import { DatabaseFileModule } from './modules/database-file/database-file.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { CategoryModule } from './modules/category/category.module';
     AuthenticationModule,
     ShopModule,
     ProductModule,
-    CategoryModule
+    CategoryModule,
+    DatabaseFileModule
   ],
   controllers: [
     AppController

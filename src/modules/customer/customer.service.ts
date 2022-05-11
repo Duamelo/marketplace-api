@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import GetInfo from '../common/interfaces/getInfo.interface';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
+import DatabaseFileService from '../database-file/database-file.service';
 import Customer from './customer.entity';
 
 
@@ -11,7 +12,8 @@ export class CustomerService implements GetInfo {
     constructor( 
         @InjectRepository(Customer)
         private readonly customerRepository: Repository<Customer>,
-        private readonly registerBaseService: RegisterBaseService
+        private readonly registerBaseService: RegisterBaseService,
+        private readonly databaseFilesService: DatabaseFileService
         ){}
 
     public async create(customer){
@@ -51,6 +53,14 @@ export class CustomerService implements GetInfo {
     }
 
     async getById(id: number) {
-        return  await this.customerRepository.findOne({ where : { id: `${id}` } });
+        return  await this.customerRepository.findOne({ where : { id: id } });
+    }
+
+    async addAvatar(userId: number, imageBuffer: Buffer, filename: string) {
+        const avatar = await this.databaseFilesService.uploadDatabaseFile(imageBuffer, filename);
+        await this.customerRepository.update(userId, {
+          avatarId: avatar.id
+        });
+        return avatar;
     }
 }

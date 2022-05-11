@@ -1,10 +1,11 @@
-import { PrimaryGeneratedColumn, Column } from 'typeorm';
+import DatabaseFile from 'src/modules/database-file/databaseFile.entity';
+import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from 'typeorm';
 
 export abstract class User {
 
     //id
     @PrimaryGeneratedColumn()
-    public id: string;
+    public id: number;
 
 
      //firstName
@@ -35,5 +36,17 @@ export abstract class User {
     //hashPassword
     @Column({ type: 'varchar', length: 300, nullable: false })
     public password: string;
+
+    @JoinColumn({ name: 'avatarId' })
+    @OneToOne(
+      () => DatabaseFile,
+      {
+        nullable: false
+      }
+    )
+    public avatar?: DatabaseFile;
+   
+    @Column({ nullable: true })
+    public avatarId?: number;
 
 }
