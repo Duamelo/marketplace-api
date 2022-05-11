@@ -27,23 +27,29 @@ const jwt_1 = require("@nestjs/jwt");
 const bcrypt = require("bcrypt");
 const customer_service_1 = require("../customer/customer.service");
 const register_base_service_1 = require("../common/services/register-base-service/register-base-service");
+const vendor_service_1 = require("../vendor/vendor.service");
 let AuthenticationService = class AuthenticationService {
-    constructor(customerService, jwtService, configService, registerBaseService) {
+    constructor(customerService, vendorService, jwtService, configService, registerBaseService) {
         this.customerService = customerService;
+        this.vendorService = vendorService;
         this.jwtService = jwtService;
         this.configService = configService;
         this.registerBaseService = registerBaseService;
     }
-    async validateUser(username, pass) {
-        const user = await this.customerService.getByEmail(username);
-        if (!user) {
+    async validateUser(email, pass) {
+        const customer = await this.customerService.getByEmail(email);
+        const vendor = await this.vendorService.getByEmail(email);
+        console.log("customer");
+        console.log(customer);
+        console.log(vendor);
+        if (!customer && !vendor) {
             return null;
         }
-        const match = await this.comparePassword(pass, user.password);
+        const match = await this.comparePassword(pass, customer ? customer.password : vendor.password);
         if (!match) {
             return null;
         }
-        const { password } = user, result = __rest(user, ["password"]);
+        const _a = customer ? customer : vendor, { password } = _a, result = __rest(_a, ["password"]);
         return result;
     }
     async login(user) {
@@ -66,6 +72,7 @@ let AuthenticationService = class AuthenticationService {
 AuthenticationService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [customer_service_1.CustomerService,
+        vendor_service_1.VendorService,
         jwt_1.JwtService,
         config_1.ConfigService,
         register_base_service_1.default])

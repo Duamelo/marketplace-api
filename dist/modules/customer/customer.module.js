@@ -13,11 +13,13 @@ const customer_service_1 = require("./customer.service");
 const customer_controller_1 = require("./customer.controller");
 const customer_entity_1 = require("./customer.entity");
 const register_base_service_module_1 = require("../common/services/register-base-service/register-base-service.module");
+const vendor_module_1 = require("../vendor/vendor.module");
 let CustomerModule = class CustomerModule {
 };
 CustomerModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            (0, common_1.forwardRef)(() => vendor_module_1.VendorModule),
             register_base_service_module_1.RegisterBaseServiceModule,
             typeorm_1.TypeOrmModule.forFeature([customer_entity_1.default])
         ],

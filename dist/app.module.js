@@ -38,10 +38,10 @@ AppModule = __decorate([
                 })
             }),
             database_module_1.DatabaseModule,
+            register_base_service_module_1.RegisterBaseServiceModule,
             vendor_module_1.VendorModule,
             customer_module_1.CustomerModule,
             authentication_module_1.AuthenticationModule,
-            register_base_service_module_1.RegisterBaseServiceModule,
             shop_module_1.ShopModule,
             product_module_1.ProductModule,
             category_module_1.CategoryModule

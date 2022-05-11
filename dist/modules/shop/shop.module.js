@@ -12,13 +12,12 @@ const shop_service_1 = require("./shop.service");
 const shop_controller_1 = require("./shop.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const shop_entity_1 = require("./shop.entity");
-const product_entity_1 = require("../product/product.entity");
 let ShopModule = class ShopModule {
 };
 ShopModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([shop_entity_1.default, product_entity_1.default])
+            typeorm_1.TypeOrmModule.forFeature([shop_entity_1.default])
         ],
         providers: [shop_service_1.ShopService],
         controllers: [shop_controller_1.ShopController]

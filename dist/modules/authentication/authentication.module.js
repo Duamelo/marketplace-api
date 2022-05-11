@@ -17,6 +17,7 @@ const jwt_1 = require("@nestjs/jwt");
 const customer_module_1 = require("../customer/customer.module");
 const register_base_service_module_1 = require("../common/services/register-base-service/register-base-service.module");
 const config_1 = require("@nestjs/config");
+const vendor_module_1 = require("../vendor/vendor.module");
 let AuthenticationModule = class AuthenticationModule {
 };
 AuthenticationModule = __decorate([
@@ -26,6 +27,7 @@ AuthenticationModule = __decorate([
             passport_1.PassportModule,
             register_base_service_module_1.RegisterBaseServiceModule,
             customer_module_1.CustomerModule,
+            vendor_module_1.VendorModule,
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
