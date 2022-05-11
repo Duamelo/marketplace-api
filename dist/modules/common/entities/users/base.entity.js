@@ -45,7 +45,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'avatarId' }),
     (0, typeorm_1.OneToOne)(() => databaseFile_entity_1.default, {
-        nullable: false
+        nullable: true
     }),
     __metadata("design:type", databaseFile_entity_1.default)
 ], User.prototype, "avatar", void 0);

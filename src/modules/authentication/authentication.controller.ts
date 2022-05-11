@@ -11,6 +11,17 @@ import JwtAuthenticationGuard from './jwt.authentication.guard';
 export class AuthenticationController {
     constructor(private authService: AuthenticationService){}
 
+
+    @UseGuards(JwtAuthenticationGuard)
+    @Get()
+    authenticate(@Req() request: RequestWithCustomer)
+    {
+        const user = request.user;
+        user.password = undefined;
+        return user;
+    }
+
+
     @UseGuards(AuthGuard('local'))
     @Post('login')
     async login(@Req() request: RequestWithCustomer | RequestWithVendor, @Res() response: Response)

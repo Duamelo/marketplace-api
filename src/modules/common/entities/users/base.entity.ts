@@ -41,7 +41,7 @@ export abstract class User {
     @OneToOne(
       () => DatabaseFile,
       {
-        nullable: false
+        nullable: true
       }
     )
     public avatar?: DatabaseFile;
