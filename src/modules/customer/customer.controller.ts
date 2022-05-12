@@ -24,6 +24,6 @@ export class CustomerController {
     @UseGuards(JwtAuthenticationGuard)
     @UseInterceptors(FileInterceptor('file'))
     async addAvatar(@Req() request: RequestWithCustomer, @UploadedFile() file: Express.Multer.File) {
-      return this.customerService.addAvatar(request.user.id, file.buffer, file.originalname);
+      return this.customerService.addAvatar(request.user.id, file.buffer, file.originalname, file.mimetype);
     }
 }

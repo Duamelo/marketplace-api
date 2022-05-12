@@ -1,19 +1,19 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import GetInfo from '../common/interfaces/getInfo.interface';
+import { Connection, Repository } from 'typeorm';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import DatabaseFileService from '../database-file/database-file.service';
 import Customer from './customer.entity';
 
 
 @Injectable()
-export class CustomerService implements GetInfo {
+export class CustomerService {
     constructor( 
         @InjectRepository(Customer)
         private readonly customerRepository: Repository<Customer>,
         private readonly registerBaseService: RegisterBaseService,
-        private readonly databaseFilesService: DatabaseFileService
+        private readonly databaseFilesService: DatabaseFileService,
+        private  connection: Connection
         ){}
 
     public async create(customer){
@@ -56,11 +56,35 @@ export class CustomerService implements GetInfo {
         return  await this.customerRepository.findOne({ where : { id: id } });
     }
 
-    async addAvatar(userId: number, imageBuffer: Buffer, filename: string) {
-        const avatar = await this.databaseFilesService.uploadDatabaseFile(imageBuffer, filename);
-        await this.customerRepository.update(userId, {
-          avatarId: avatar.id
-        });
-        return avatar;
+    async addAvatar(userId: number, imageBuffer: Buffer, filename: string, mimetype: string) {
+        const queryRunner = this.connection.createQueryRunner();
+     
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+     
+        try {
+          const user = await queryRunner.manager.findOne(Customer, {where : { id: userId } });
+          const currentAvatarId = user.avatarId;
+          const avatar = await this.databaseFilesService.uploadDatabaseFileWithQueryRunner(imageBuffer, filename,mimetype, queryRunner);
+     
+          await queryRunner.manager.update(Customer, userId, {
+            avatarId: avatar.id
+          });
+     
+          if (currentAvatarId) {
+            await this.databaseFilesService.deleteFileWithQueryRunner(currentAvatarId, queryRunner);
+          }
+     
+          await queryRunner.commitTransaction();
+     
+          return avatar;
+        } 
+        catch {
+          await queryRunner.rollbackTransaction();
+          throw new InternalServerErrorException();
+        }
+        finally {
+          await queryRunner.release();
+        }
     }
 }

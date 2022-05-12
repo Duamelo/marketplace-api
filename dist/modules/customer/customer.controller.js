@@ -27,7 +27,7 @@ let CustomerController = class CustomerController {
         return await this.customerService.create(customer);
     }
     async addAvatar(request, file) {
-        return this.customerService.addAvatar(request.user.id, file.buffer, file.originalname);
+        return this.customerService.addAvatar(request.user.id, file.buffer, file.originalname, file.mimetype);
     }
 };
 __decorate([

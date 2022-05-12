@@ -13,17 +13,30 @@ export class DatabaseFileController {
     ){}
 
 
+//     @Get(':id')
+//     async getDatabaseFileById(@Param('id', ParseIntPipe) id: number, @Res({ passthrough: true }) response: Response) {
+//         const file = await this.databaseFilesService.getFileById(id);
+    
+//         const stream = Readable.from(file.data);
+    
+//         response.set({
+//         'Content-Disposition': `inline; filename="${file.filename}"`,
+//         'Content-Type': file.mimetype
+//         });
+    
+//         return new StreamableFile(stream);
+//   }
+
     @Get(':id')
-    async getDatabaseFileById(@Param('id', ParseIntPipe) id: number, @Res({ passthrough: true }) response: Response) {
+    async getDatabaseFileById(@Res() response: Response, @Param('id', ParseIntPipe) id: number) {
         const file = await this.databaseFilesService.getFileById(id);
-    
+
         const stream = Readable.from(file.data);
-    
         response.set({
-        'Content-Disposition': `inline; filename="${file.filename}"`,
-        'Content-Type': 'image'
-        })
-    
-        return new StreamableFile(stream);
-  }
+            'Content-Disposition': `inline; filename="${file.filename}"`,
+            'Content-Type': file.mimetype
+            });
+            
+        stream.pipe(response);
+    }
 }

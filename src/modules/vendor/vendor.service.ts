@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import GetInfo from '../common/interfaces/getInfo.interface';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import Vendor from './vendor.entity';
 
 
 @Injectable()
-export class VendorService implements GetInfo {
+export class VendorService {
     constructor( 
         @InjectRepository(Vendor)
         private readonly vendorRepository: Repository<Vendor>,

@@ -12,5 +12,8 @@ class DatabaseFile {
     type: 'bytea',
   })
   data: Uint8Array;
+
+  @Column()
+  mimetype: string;
 }
 export default DatabaseFile;
