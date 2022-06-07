@@ -14,9 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerController = void 0;
 const common_1 = require("@nestjs/common");
-const doesUserExist_guard_1 = require("../common/guards/doesUserExist.guard");
+const jwt_authentication_guard_1 = require("../authentication/jwt.authentication.guard");
 const customer_service_1 = require("./customer.service");
 const create_customer_dto_1 = require("./dto/create-customer.dto");
+const update_customer_dto_1 = require("./dto/update-customer.dto");
 let CustomerController = class CustomerController {
     constructor(customerService) {
         this.customerService = customerService;
@@ -24,16 +25,69 @@ let CustomerController = class CustomerController {
     async register(customer) {
         return await this.customerService.create(customer);
     }
+    getCustomer() {
+        return this.customerService.getAllCustomer();
+    }
+    getCustomerById(id) {
+        return this.customerService.getById(id);
+    }
+    getCustomerByEmail(email) {
+        return this.customerService.getByEmail(email);
+    }
+    async update(id, user) {
+        return await this.customerService.updateCustomer(id, user);
+    }
+    async deleteCustomer(id) {
+        return await this.customerService.deleteCustomer(id);
+    }
 };
 __decorate([
     (0, common_1.HttpCode)(200),
-    (0, common_1.UseGuards)(doesUserExist_guard_1.DoesUserExist),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
     (0, common_1.Post)('register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_customer_dto_1.default]),
     __metadata("design:returntype", Promise)
 ], CustomerController.prototype, "register", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], CustomerController.prototype, "getCustomer", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], CustomerController.prototype, "getCustomerById", null);
+__decorate([
+    (0, common_1.Get)('/email/:email'),
+    __param(0, (0, common_1.Param)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], CustomerController.prototype, "getCustomerByEmail", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, update_customer_dto_1.default]),
+    __metadata("design:returntype", Promise)
+], CustomerController.prototype, "update", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.Delete)('/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], CustomerController.prototype, "deleteCustomer", null);
 CustomerController = __decorate([
     (0, common_1.Controller)('customer'),
     __metadata("design:paramtypes", [customer_service_1.CustomerService])

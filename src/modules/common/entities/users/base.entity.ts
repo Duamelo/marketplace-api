@@ -4,7 +4,7 @@ export abstract class User {
 
     //id
     @PrimaryGeneratedColumn()
-    public id: string;
+    public id: number;
 
 
      //firstName

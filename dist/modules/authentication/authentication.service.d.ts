@@ -11,7 +11,7 @@ export declare class AuthenticationService {
     private readonly registerBaseService;
     constructor(customerService: CustomerService, vendorService: VendorService, jwtService: JwtService, configService: ConfigService, registerBaseService: RegisterBaseService);
     validateUser(email: string, pass: string): Promise<{
-        id: string;
+        id: number;
         firstName: string;
         lastName: string;
         email: string;

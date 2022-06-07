@@ -13,29 +13,31 @@ const class_validator_1 = require("class-validator");
 class CreateCustomerDto {
 }
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Nom requis svp' }),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "firstName", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Prénom requis svp' }),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "lastName", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'email requis svp' }),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Numéro de teléphone requis svp' }),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "phone", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Adresse requis svp' }),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "address", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MinLength)(6),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Mot de passe requis svp' }),
+    (0, class_validator_1.MinLength)(6, {
+        message: 'Mot de passe trop court',
+    }),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "password", void 0);
 exports.default = CreateCustomerDto;

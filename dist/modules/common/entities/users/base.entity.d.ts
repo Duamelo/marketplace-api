@@ -1,5 +1,5 @@
 export declare abstract class User {
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
     email: string;

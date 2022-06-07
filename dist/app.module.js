@@ -20,6 +20,7 @@ const register_base_service_module_1 = require("./modules/common/services/regist
 const shop_module_1 = require("./modules/shop/shop.module");
 const product_module_1 = require("./modules/product/product.module");
 const category_module_1 = require("./modules/category/category.module");
+const shipping_module_1 = require("./modules/shipping/shipping.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -44,7 +45,8 @@ AppModule = __decorate([
             authentication_module_1.AuthenticationModule,
             shop_module_1.ShopModule,
             product_module_1.ProductModule,
-            category_module_1.CategoryModule
+            category_module_1.CategoryModule,
+            shipping_module_1.ShippingModule
         ],
         controllers: [
             app_controller_1.AppController

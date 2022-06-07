@@ -4,7 +4,7 @@ import CategoryDto from './dto/category.dto';
 export declare class CategoryService {
     private readonly categoryRepository;
     constructor(categoryRepository: Repository<Category>);
-    create(category: any): Promise<"this category  already exist" | {
+    create(category: any): Promise<"this category already exist" | {
         category: Category[];
     }>;
     delete(category: any): Promise<void>;

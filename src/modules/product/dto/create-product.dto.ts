@@ -11,7 +11,7 @@ class CreateProductDto {
     
     
     @IsNotEmpty()
-    @IsEmail()
+    //@IsEmail()
     readonly images: string;
     
 

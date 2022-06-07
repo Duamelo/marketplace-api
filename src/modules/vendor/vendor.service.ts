@@ -51,6 +51,6 @@ export class VendorService implements GetInfo {
     }
 
     async getById(id: number) {
-        return  await this.vendorRepository.findOne({ where : { id: `${id}` } });
+        return  await this.vendorRepository.findOne({ where : { id: id } });
     }
 }
