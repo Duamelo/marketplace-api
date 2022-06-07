@@ -1,5 +1,5 @@
 export declare class Category {
-    id: string;
+    id: number;
     name: string;
 }
 export default Category;

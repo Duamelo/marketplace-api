@@ -30,6 +30,16 @@ let ProductService = class ProductService {
         const _product = await this.productRepository.save(newProduct);
         return { product: _product };
     }
+    async getProductById(productId) {
+        return await this.productRepository.find({ where: {
+                id: productId,
+            },
+            relations: {
+                images: true,
+                categories: true
+            }
+        });
+    }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),

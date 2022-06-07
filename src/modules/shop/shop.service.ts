@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import RequestWithVendor from '../vendor/interfaces/requestWithVendor.interface';
 import CreateShopDto from './dto/create-shop.dto';
 import ShopDto from './dto/shop.dto';
 import Shop from './shop.entity';

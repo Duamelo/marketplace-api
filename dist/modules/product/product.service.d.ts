@@ -7,5 +7,6 @@ export declare class ProductService {
     create(product: CreateProductDto): Promise<{
         product: Product;
     }>;
+    getProductById(productId: number): Promise<Product[]>;
 }
 export default ProductService;

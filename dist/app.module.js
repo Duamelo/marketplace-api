@@ -21,6 +21,9 @@ const shop_module_1 = require("./modules/shop/shop.module");
 const product_module_1 = require("./modules/product/product.module");
 const category_module_1 = require("./modules/category/category.module");
 const database_file_module_1 = require("./modules/database-file/database-file.module");
+const images_handler_module_1 = require("./modules/images-handler/images-handler.module");
+const cart_module_1 = require("./modules/cart/cart.module");
+const command_module_1 = require("./modules/command/command.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -46,7 +49,10 @@ AppModule = __decorate([
             shop_module_1.ShopModule,
             product_module_1.ProductModule,
             category_module_1.CategoryModule,
-            database_file_module_1.DatabaseFileModule
+            database_file_module_1.DatabaseFileModule,
+            images_handler_module_1.ImagesHandlerModule,
+            cart_module_1.CartModule,
+            command_module_1.CommandModule
         ],
         controllers: [
             app_controller_1.AppController

@@ -6,4 +6,5 @@ export declare class ProductController {
     addProduct(product: CreateProductDto): Promise<{
         product: import("./product.entity").Product;
     }>;
+    getProductById(productId: number): Promise<import("./product.entity").Product[]>;
 }

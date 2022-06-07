@@ -12,6 +12,9 @@ import { ShopModule } from './modules/shop/shop.module';
 import { ProductModule } from './modules/product/product.module';
 import { CategoryModule } from './modules/category/category.module';
 import { DatabaseFileModule } from './modules/database-file/database-file.module';
+import { ImagesHandlerModule } from './modules/images-handler/images-handler.module';
+import { CartModule } from './modules/cart/cart.module';
+import { CommandModule } from './modules/command/command.module';
 
 @Module({
   imports: [
@@ -35,7 +38,10 @@ import { DatabaseFileModule } from './modules/database-file/database-file.module
     ShopModule,
     ProductModule,
     CategoryModule,
-    DatabaseFileModule
+    DatabaseFileModule,
+    ImagesHandlerModule,
+    CartModule,
+    CommandModule
   ],
   controllers: [
     AppController

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEmail, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsEmail, IsNumber, IsString } from 'class-validator';
 
 class CreateProductDto {
 
@@ -10,9 +10,9 @@ class CreateProductDto {
     readonly description: string;
     
     
-    @IsNotEmpty()
-    @IsEmail()
-    readonly images: string;
+    // @IsNotEmpty()
+    // @IsEmail()
+    // readonly images: string;
     
 
     @IsNotEmpty()
@@ -25,6 +25,9 @@ class CreateProductDto {
     @IsNotEmpty()
     @IsNumber()
     readonly shopId: number;
-}
 
+    @IsNotEmpty()
+    @IsString()
+    readonly productName: string;
+}
 export default CreateProductDto;
