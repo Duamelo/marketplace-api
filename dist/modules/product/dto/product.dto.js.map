@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"file":"product.dto.js","sourceRoot":"","sources":["../../../../src/modules/product/dto/product.dto.ts"],"names":[],"mappings":";;;AAAA,MAAa,UAAU;CAKtB;AALD,gCAKC;AACD,kBAAe,UAAU,CAAC"}
+=======
+{"version":3,"file":"product.dto.js","sourceRoot":"","sources":["../../../../src/modules/product/dto/product.dto.ts"],"names":[],"mappings":";;;AAAA,MAAa,UAAU;CAMtB;AAND,gCAMC;AACD,kBAAe,UAAU,CAAC"}
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514

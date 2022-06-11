@@ -14,7 +14,10 @@ const customer_controller_1 = require("./customer.controller");
 const customer_entity_1 = require("./customer.entity");
 const register_base_service_module_1 = require("../common/services/register-base-service/register-base-service.module");
 const vendor_module_1 = require("../vendor/vendor.module");
+<<<<<<< HEAD
 const database_file_module_1 = require("../database-file/database-file.module");
+=======
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
 let CustomerModule = class CustomerModule {
 };
 CustomerModule = __decorate([

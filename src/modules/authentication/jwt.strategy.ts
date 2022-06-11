@@ -12,7 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
         private readonly customerService: CustomerService,
         private readonly vendorService: VendorService,
-       private readonly configService: ConfigService
+        private readonly configService: ConfigService
         ) {
         super({
             //  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -26,12 +26,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     async validate(payload: TokenPayload) {
           // check if user in the token actually exist
-          const customer = await this.customerService.getById(payload.userId);
-          const vendor = await this.vendorService.getById(payload.userId);
+        const customer = await this.customerService.getById(payload.userId);
+        const vendor = await this.vendorService.getById(payload.userId);
 
-          if (!customer && !vendor) {
-              throw new UnauthorizedException('You are not authorized to perform the operation');
-          }
-          return customer ? customer : vendor;
+        if (!customer && !vendor) {
+            throw new UnauthorizedException('You are not authorized to perform the operation');
+        }
+        return customer ? customer : vendor;
     }
 }

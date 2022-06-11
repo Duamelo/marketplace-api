@@ -2,7 +2,7 @@ import { ClassSerializerInterceptor, Controller, Get, Param, ParseIntPipe, Res, 
 import { Readable } from 'typeorm/platform/PlatformTools';
 import DatabaseFileService from './database-file.service';
 import { Response } from 'express';
- 
+
 
 @Controller('database-file')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -35,8 +35,7 @@ export class DatabaseFileController {
         response.set({
             'Content-Disposition': `inline; filename="${file.filename}"`,
             'Content-Type': file.mimetype
-            });
-            
+        });
         stream.pipe(response);
     }
 }

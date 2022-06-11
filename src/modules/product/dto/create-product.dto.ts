@@ -9,10 +9,11 @@ class CreateProductDto {
     @IsNotEmpty()
     readonly description: string;
     
-    
     // @IsNotEmpty()
     // @IsEmail()
     // readonly images: string;
+    @IsNotEmpty()
+    readonly images: string;
     
 
     @IsNotEmpty()

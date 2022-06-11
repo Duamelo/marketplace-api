@@ -26,14 +26,13 @@ export class ImagesHandlerService {
         return newImage;
     }
 
+
     async getFileById(fileId: number) {
         const file = await this.imageHandlerRepository.findOne({where: {id: fileId}});
         if (!file) {
           throw new NotFoundException();
         }
         return file;
-      }
-
-
+    }
 }
 export default ImagesHandlerService;

@@ -2,30 +2,31 @@ import { IsNotEmpty, MinLength, IsEmail } from 'class-validator';
 
 class CreateCustomerDto {
 
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'Nom requis svp'})
     readonly firstName: string;
 
 
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'Prénom requis svp'})
     readonly lastName: string;
     
     
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'email requis svp'})
     @IsEmail()
     readonly email: string;
     
 
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'Numéro de teléphone requis svp'})
     readonly phone: string;
     
     
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'Adresse requis svp'})
     readonly address: string;
     
 
-    @IsNotEmpty()
-    @MinLength(6)
+    @IsNotEmpty({message: 'Mot de passe requis svp'})
+    @MinLength(6, {
+        message: 'Mot de passe trop court',
+    })
     readonly password: string;
 }
-
 export default CreateCustomerDto;

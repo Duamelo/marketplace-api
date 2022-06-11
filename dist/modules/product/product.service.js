@@ -30,6 +30,7 @@ let ProductService = class ProductService {
         const _product = await this.productRepository.save(newProduct);
         return { product: _product };
     }
+<<<<<<< HEAD
     async getProductById(productId) {
         return await this.productRepository.find({ where: {
                 id: productId,
@@ -40,6 +41,8 @@ let ProductService = class ProductService {
             }
         });
     }
+=======
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),
