@@ -16,7 +16,7 @@ export class CategoryService {
         var categoryExist = await this.categoryRepository.find({where: {name: category.name}});
 
         if(categoryExist.length > 0)
-            return "this category  already exist";
+            return "this category already exist";
         
         const newCategory = await this.categoryRepository.create(category);
         const savedCategory = await this.categoryRepository.save(newCategory);

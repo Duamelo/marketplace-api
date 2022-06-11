@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne, OneToMany } from "typeorm"
-import Category from "../category/category.entity"
-import ImageHandler from "../images-handler/imageHandler.entity"
-import Shop from "../shop/shop.entity"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne, OneToMany } from "typeorm";
+import Category from "../category/category.entity";
+import ImageHandler from "../images-handler/imageHandler.entity";
+import Shop from "../shop/shop.entity";
 
 @Entity({name: 'product'})
 export class Product {

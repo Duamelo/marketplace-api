@@ -19,7 +19,7 @@ ProductModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([product_entity_1.default])
         ],
-        providers: [product_service_1.ProductService],
+        providers: [product_service_1.ProductService,],
         controllers: [product_controller_1.ProductController]
     })
 ], ProductModule);

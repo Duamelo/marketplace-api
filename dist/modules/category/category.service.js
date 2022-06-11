@@ -23,13 +23,23 @@ let CategoryService = class CategoryService {
     }
     async create(category) {
         var categoryExist = await this.categoryRepository.find({ where: { name: category.name } });
+<<<<<<< HEAD
         if (categoryExist.length > 0)
             return "this category  already exist";
+=======
+        console.log(categoryExist);
+        if (categoryExist.length > 0)
+            return "this category already exist";
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
         const newCategory = await this.categoryRepository.create(category);
         const savedCategory = await this.categoryRepository.save(newCategory);
         return { category: savedCategory };
     }
     async delete(category) {
+<<<<<<< HEAD
+=======
+        const cat = await this.categoryRepository.find({ where: { name: category.name } });
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
     }
     async update(category) {
     }

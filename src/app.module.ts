@@ -15,6 +15,7 @@ import { DatabaseFileModule } from './modules/database-file/database-file.module
 import { ImagesHandlerModule } from './modules/images-handler/images-handler.module';
 import { CartModule } from './modules/cart/cart.module';
 import { CommandModule } from './modules/command/command.module';
+import { ShippingModule } from './modules/shipping/shipping.module';
 
 @Module({
   imports: [
@@ -41,7 +42,8 @@ import { CommandModule } from './modules/command/command.module';
     DatabaseFileModule,
     ImagesHandlerModule,
     CartModule,
-    CommandModule
+    CommandModule,
+    ShippingModule
   ],
   controllers: [
     AppController
