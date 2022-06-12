@@ -9,10 +9,15 @@ export class RegisterBaseService {
     ){ }
 
     public async generateToken(user){
+<<<<<<< HEAD
         const {firstName, lastName, email, phone, address, role} = user;
         console.log("generate token");
         console.log(user);
         const token = await this.jwtService.signAsync({firstName, lastName, email, phone, address, role});
+=======
+        const {firstName, lastName, email, phone, address} = user;
+        const token = await this.jwtService.signAsync({firstName, lastName, email, phone, address});
+>>>>>>> main
         return token;
     }
 

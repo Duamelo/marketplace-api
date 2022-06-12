@@ -21,6 +21,11 @@ let AuthenticationController = class AuthenticationController {
     constructor(authService) {
         this.authService = authService;
     }
+    authenticate(request) {
+        const user = request.user;
+        user.password = undefined;
+        return user;
+    }
     async login(request, response) {
         const { user } = request;
         const cookie = this.authService.getCookieWithJwtToken(user.id);
@@ -33,6 +38,14 @@ let AuthenticationController = class AuthenticationController {
         return response.sendStatus(200);
     }
 };
+__decorate([
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthenticationController.prototype, "authenticate", null);
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('local')),
     (0, common_1.Post)('login'),

@@ -8,7 +8,7 @@ import Vendor from './vendor.entity';
 
 
 @Injectable()
-export class VendorService implements GetInfo {
+export class VendorService {
     constructor( 
         @InjectRepository(Vendor)
         private readonly vendorRepository: Repository<Vendor>,

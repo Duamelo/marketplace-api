@@ -23,10 +23,6 @@ export class AuthenticationService {
         const customer = await this.customerService.getByEmail(email);
         const vendor = await this.vendorService.getByEmail(email);
 
-
-        console.log("customer")
-        console.log(customer);
-        console.log(vendor);
         if (!customer && !vendor) {
             return null;
         }
@@ -62,7 +58,6 @@ export class AuthenticationService {
         const payload: TokenPayload = { userId };
         const token = this.jwtService.sign(payload);
         return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXPIRATION_TIME')}`;
-        
     }
 
 

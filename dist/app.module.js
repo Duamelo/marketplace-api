@@ -20,6 +20,12 @@ const register_base_service_module_1 = require("./modules/common/services/regist
 const shop_module_1 = require("./modules/shop/shop.module");
 const product_module_1 = require("./modules/product/product.module");
 const category_module_1 = require("./modules/category/category.module");
+
+const database_file_module_1 = require("./modules/database-file/database-file.module");
+const images_handler_module_1 = require("./modules/images-handler/images-handler.module");
+const cart_module_1 = require("./modules/cart/cart.module");
+const command_module_1 = require("./modules/command/command.module");
+
 const shipping_module_1 = require("./modules/shipping/shipping.module");
 const core_1 = require("@nestjs/core");
 const roles_guard_1 = require("./modules/common/guards/roles.guard");

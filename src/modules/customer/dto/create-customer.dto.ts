@@ -29,9 +29,7 @@ class CreateCustomerDto {
     @IsNotEmpty({message: 'Mot de passe requis svp'})
     @MinLength(6, {
         message: 'Mot de passe trop court',
-      })
-
+    })
     readonly password: string;
 }
-
 export default CreateCustomerDto;

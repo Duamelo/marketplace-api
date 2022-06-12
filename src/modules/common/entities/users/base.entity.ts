@@ -1,4 +1,5 @@
-import { PrimaryGeneratedColumn, Column } from 'typeorm';
+import DatabaseFile from 'src/modules/database-file/databaseFile.entity';
+import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from 'typeorm';
 import Role from '../../roles/role.enum';
 
 export abstract class User {
@@ -39,5 +40,17 @@ export abstract class User {
     //hashPassword
     @Column({ type: 'varchar', length: 300, nullable: false })
     public password: string;
+
+    @JoinColumn({ name: 'avatarId' })
+    @OneToOne(
+      () => DatabaseFile,
+      {
+        nullable: true
+      }
+    )
+    public avatar?: DatabaseFile;
+   
+    @Column({ nullable: true })
+    public avatarId?: number;
 
 }

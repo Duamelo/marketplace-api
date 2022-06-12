@@ -6,6 +6,10 @@ import Vendor from 'src/modules/vendor/vendor.entity';
 import Category from 'src/modules/category/category.entity';
 import Product from 'src/modules/product/product.entity';
 import Shop from 'src/modules/shop/shop.entity';
+import DatabaseFile from 'src/modules/database-file/databaseFile.entity';
+import ImageHandler from 'src/modules/images-handler/imageHandler.entity';
+import Cart from 'src/modules/cart/cart.entity';
+import Command from 'src/modules/command/command.entity';
  
 @Module({
   imports: [
@@ -20,7 +24,7 @@ import Shop from 'src/modules/shop/shop.entity';
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
         entities: [
-          Customer, Vendor, Category, Product, Shop
+          Customer, Vendor, Category, Product, Shop, DatabaseFile, ImageHandler, Cart, Command
         ],
         synchronize: true,
       })

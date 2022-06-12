@@ -39,9 +39,12 @@ let AuthenticationService = class AuthenticationService {
     async validateUser(email, pass) {
         const customer = await this.customerService.getByEmail(email);
         const vendor = await this.vendorService.getByEmail(email);
+<<<<<<< HEAD
+=======
         console.log("customer");
         console.log(customer);
         console.log(vendor);
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
         if (!customer && !vendor) {
             return null;
         }

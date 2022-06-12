@@ -1,11 +1,12 @@
-import { string } from '@hapi/joi';
-import { Controller, Body, Post, UseGuards, HttpCode, Req, Res, Get, Delete, Param, UsePipes, ValidationPipe, Put } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Controller, Body, Post, UseGuards, HttpCode, Req, Res, Get, Delete, Param, UseInterceptors, UploadedFile, UsePipes, ValidationPipe, Put } from '@nestjs/common';
 import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
 import { Roles } from '../common/decorators/core/roles.decorator';
 import { DoesUserExist } from '../common/guards/doesUserExist.guard';
 import Role from '../common/roles/role.enum';
 import { CustomerService } from './customer.service';
 import CreateCustomerDto from './dto/create-customer.dto';
+import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import UpdateCustomerDto from './dto/update-customer.dto';
 
 @Controller('customer')
@@ -21,6 +22,13 @@ export class CustomerController {
     @Post('register')
     async register(@Body() customer: CreateCustomerDto) {
         return await this.customerService.create(customer);
+    }
+
+    @Post('avatar')
+    @UseGuards(JwtAuthenticationGuard)
+    @UseInterceptors(FileInterceptor('file'))
+    async addAvatar(@Req() request: RequestWithCustomer, @UploadedFile() file: Express.Multer.File) {
+      return this.customerService.addAvatar(request.user.id, file.buffer, file.originalname, file.mimetype);
     }
 
 

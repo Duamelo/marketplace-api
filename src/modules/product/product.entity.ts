@@ -1,27 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne } from "typeorm"
-import Category from "../category/category.entity"
-import Shop from "../shop/shop.entity"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne, OneToMany } from "typeorm";
+import Category from "../category/category.entity";
+import ImageHandler from "../images-handler/imageHandler.entity";
+import Shop from "../shop/shop.entity";
 
 @Entity({name: 'product'})
 export class Product {
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column()
-    name: string
+    name: string;
 
     @Column()
-    description: string
+    description: string;
 
     @Column()
-    images: string
+    price: string;
 
     @Column()
-    price: string
-
-    @Column()
-    reference: string
-
+    reference: string;
 
     @ManyToMany(() => Category)
     @JoinTable()
@@ -29,5 +26,8 @@ export class Product {
 
     @ManyToOne(() => Shop, (shop) => shop.products)
     shop: Shop;
+
+    @OneToMany(() => ImageHandler, (image) => image.product)
+    images: ImageHandler[];
 }
 export default Product;

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import Role from '../../roles/role.enum';
+=======
+import DatabaseFile from 'src/modules/database-file/databaseFile.entity';
+>>>>>>> main
 export declare abstract class User {
     id: number;
     firstName: string;
@@ -8,4 +12,6 @@ export declare abstract class User {
     address: string;
     role: Role;
     password: string;
+    avatar?: DatabaseFile;
+    avatarId?: number;
 }

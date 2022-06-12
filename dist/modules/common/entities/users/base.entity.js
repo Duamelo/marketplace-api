@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const databaseFile_entity_1 = require("../../../database-file/databaseFile.entity");
 const typeorm_1 = require("typeorm");
 const role_enum_1 = require("../../roles/role.enum");
 class User {
@@ -46,5 +47,16 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 300, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.JoinColumn)({ name: 'avatarId' }),
+    (0, typeorm_1.OneToOne)(() => databaseFile_entity_1.default, {
+        nullable: true
+    }),
+    __metadata("design:type", databaseFile_entity_1.default)
+], User.prototype, "avatar", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], User.prototype, "avatarId", void 0);
 exports.User = User;
 //# sourceMappingURL=base.entity.js.map

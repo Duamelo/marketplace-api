@@ -15,6 +15,7 @@ export class ProductService {
     async create(product: CreateProductDto){
 
             const id = product.shopId;
+            // const name = product.productName;
 
             const rest: ProductDto = product;
 
@@ -29,5 +30,17 @@ export class ProductService {
 
             return {product: _product};
     }
+
+    async getProductById(productId: number){
+        return await this.productRepository.find({ where: 
+            {
+                id: productId,
+            },
+            relations :{
+                images: true,
+                categories: true
+            }
+        })
+    }
 }
-export default ProductService;  
+export default ProductService;

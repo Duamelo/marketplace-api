@@ -32,6 +32,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         if (!customer && !vendor) {
             throw new UnauthorizedException('You are not authorized to perform the operation');
         }
-          return customer ? customer : vendor;
+        return customer ? customer : vendor;
     }
 }

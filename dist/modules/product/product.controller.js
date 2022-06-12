@@ -24,18 +24,42 @@ let ProductController = class ProductController {
     async addProduct(product) {
         return await this.productService.create(product);
     }
+<<<<<<< HEAD
+    async getProductById(productId) {
+        return await this.productService.getProductById(productId);
+    }
+=======
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
 };
 __decorate([
     (0, common_1.HttpCode)(200),
     (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+<<<<<<< HEAD
+    (0, common_1.Post)(),
+=======
     (0, common_1.Post)('add'),
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_product_dto_1.default]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "addProduct", null);
+<<<<<<< HEAD
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)(':productId'),
+    __param(0, (0, common_1.Param)('productId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getProductById", null);
+ProductController = __decorate([
+    (0, common_1.Controller)('products'),
+=======
 ProductController = __decorate([
     (0, common_1.Controller)('product'),
+>>>>>>> f9045c72487abed600862f17274d924fdc77e514
     __metadata("design:paramtypes", [product_service_1.default])
 ], ProductController);
 exports.ProductController = ProductController;
