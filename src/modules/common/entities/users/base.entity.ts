@@ -1,4 +1,5 @@
 import { PrimaryGeneratedColumn, Column } from 'typeorm';
+import Role from '../../roles/role.enum';
 
 export abstract class User {
 
@@ -31,6 +32,9 @@ export abstract class User {
     @Column({ type: 'varchar', length: 300 })
     public address: string;
 
+    //role
+    @Column({ type : 'enum', enum : Role , default: Role.Customer })
+    public role: Role
 
     //hashPassword
     @Column({ type: 'varchar', length: 300, nullable: false })

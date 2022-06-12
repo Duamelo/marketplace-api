@@ -43,7 +43,7 @@ export class CustomerService implements GetInfo {
         throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
     }
 
-    //fin all
+    //find all
     async getAllCustomer() {
         return this.customerRepository.find();
     }

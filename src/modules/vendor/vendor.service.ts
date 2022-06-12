@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import GetInfo from '../common/interfaces/getInfo.interface';
+import Role from '../common/roles/role.enum';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import Vendor from './vendor.entity';
 
@@ -20,29 +21,30 @@ export class VendorService implements GetInfo {
 
         if(user.length == 0){
 
-        //hash the password
-        const hashPassword = await this.registerBaseService.hashPassword(vendor.password);
+            //hash the password
+            const hashPassword = await this.registerBaseService.hashPassword(vendor.password);
 
-        vendor.password = hashPassword;
+            vendor.password = hashPassword;
 
-        //create the vendor
-        const newVendor =  await this.vendorRepository.create(vendor);
-        const _vendor = await this.vendorRepository.save(newVendor);
-
-
-        //tslin:disable-next-line: no-string-literal
-
-        // const { password, ...result } = client;
+            //create the vendor
+            const newVendor =  await this.vendorRepository.create(vendor);
+            const _vendor = await this.vendorRepository.save(newVendor);
 
 
-        //generate token
-        const token = await this.registerBaseService.generateToken(_vendor);
+            //tslin:disable-next-line: no-string-literal
+
+            // const { password, ...result } = client;
 
 
-        //return the customer and the token
+            //generate token
+            const token = await this.registerBaseService.generateToken(_vendor);
+        
 
-        return { user: _vendor, token: token };
+            //return the customer and the token
+
+            return { user: _vendor, token: token };
         }
+        throw new HttpException('Vendor email already exist', HttpStatus.NOT_FOUND);
     }
 
     

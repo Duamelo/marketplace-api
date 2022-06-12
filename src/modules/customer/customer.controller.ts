@@ -1,7 +1,9 @@
 import { string } from '@hapi/joi';
 import { Controller, Body, Post, UseGuards, HttpCode, Req, Res, Get, Delete, Param, UsePipes, ValidationPipe, Put } from '@nestjs/common';
 import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
+import { Roles } from '../common/decorators/core/roles.decorator';
 import { DoesUserExist } from '../common/guards/doesUserExist.guard';
+import Role from '../common/roles/role.enum';
 import { CustomerService } from './customer.service';
 import CreateCustomerDto from './dto/create-customer.dto';
 import UpdateCustomerDto from './dto/update-customer.dto';
@@ -15,6 +17,7 @@ export class CustomerController {
     @HttpCode(200)
     //@UseGuards(DoesUserExist)
     @UsePipes(ValidationPipe)
+    @UsePipes(new ValidationPipe({transform:true}))
     @Post('register')
     async register(@Body() customer: CreateCustomerDto) {
         return await this.customerService.create(customer);
@@ -22,12 +25,14 @@ export class CustomerController {
 
 
     //get all customer
+    @Roles(Role.Admin)
     @Get()
     getCustomer(){
         return this.customerService.getAllCustomer();
     }
 
     //get customer by id
+    @Roles(Role.Admin)
     @Get(':id')
     getCustomerById(@Param('id') id: number){
         return this.customerService.getById(id);
@@ -41,16 +46,16 @@ export class CustomerController {
 
     //update
     @HttpCode(200)
-    // @UsePipes(ValidationPipe)
+    //@UsePipes(ValidationPipe)
     @UseGuards(JwtAuthenticationGuard)
+    @Roles(Role.Customer)
     @Put(':id')
     async update(@Param('id') id: number, @Body() user: UpdateCustomerDto){
         return await this.customerService.updateCustomer(id, user);
     }
 
     //delete customer 
-    //verifier que le client est authentifié
-    @HttpCode(200)
+    @Roles(Role.Admin)
     @Delete('/:id')
     async deleteCustomer(@Param('id') id: number) {
         return await this.customerService.deleteCustomer(id);

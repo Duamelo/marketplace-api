@@ -1,4 +1,5 @@
 import { IsNotEmpty, MinLength, IsEmail, IsNumber } from 'class-validator';
+import Role from 'src/modules/common/roles/role.enum';
 
 class UpdateCustomerDto {
 
@@ -22,6 +23,7 @@ class UpdateCustomerDto {
     @IsNotEmpty({message: 'Adresse requis svp'})
     readonly address: string;
     
+    readonly role: Role.Customer;
 
     @IsNotEmpty({message: 'Mot de passe requis svp'})
     @MinLength(6, {

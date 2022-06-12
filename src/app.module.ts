@@ -12,6 +12,8 @@ import { ShopModule } from './modules/shop/shop.module';
 import { ProductModule } from './modules/product/product.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './modules/common/guards/roles.guard';
 
 @Module({
   imports: [
@@ -42,6 +44,10 @@ import { ShippingModule } from './modules/shipping/shipping.module';
   ],
   providers: [
     AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard
+    },
   ],
 })
 export class AppModule {}

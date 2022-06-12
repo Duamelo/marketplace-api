@@ -17,6 +17,7 @@ export declare class AuthenticationService {
         email: string;
         phone: string;
         address: string;
+        role: import("../common/roles/role.enum").default;
     }>;
     login(user: any): Promise<{
         user: any;

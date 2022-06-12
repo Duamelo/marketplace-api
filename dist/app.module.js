@@ -21,6 +21,8 @@ const shop_module_1 = require("./modules/shop/shop.module");
 const product_module_1 = require("./modules/product/product.module");
 const category_module_1 = require("./modules/category/category.module");
 const shipping_module_1 = require("./modules/shipping/shipping.module");
+const core_1 = require("@nestjs/core");
+const roles_guard_1 = require("./modules/common/guards/roles.guard");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -53,6 +55,10 @@ AppModule = __decorate([
         ],
         providers: [
             app_service_1.AppService,
+            {
+                provide: core_1.APP_GUARD,
+                useClass: roles_guard_1.RolesGuard
+            },
         ],
     })
 ], AppModule);

@@ -4,6 +4,7 @@ declare class CreateVendorDto {
     readonly email: string;
     readonly phone: string;
     readonly address: string;
+    readonly role: string;
     readonly password: string;
 }
 export default CreateVendorDto;

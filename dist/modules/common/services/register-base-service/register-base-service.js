@@ -18,10 +18,10 @@ let RegisterBaseService = class RegisterBaseService {
         this.jwtService = jwtService;
     }
     async generateToken(user) {
-        const { firstName, lastName, email, phone, address } = user;
+        const { firstName, lastName, email, phone, address, role } = user;
         console.log("generate token");
         console.log(user);
-        const token = await this.jwtService.signAsync({ firstName, lastName, email, phone, address });
+        const token = await this.jwtService.signAsync({ firstName, lastName, email, phone, address, role });
         return token;
     }
     async hashPassword(password) {
