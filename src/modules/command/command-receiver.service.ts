@@ -30,49 +30,42 @@ export class CommandReceiver {
 
         var _cart = await this.cartRepository.find({where: {id: cartId}});
 
-        // console.log("cart");
-        // console.log(Object.keys(_cart[0].items));
+        console.log("cart");
+        console.log(_cart);
+        console.log(Object.keys(_cart[0].items));
 
         var items = await this.cartRepository.query(`SELECT items->'items' as item from cart where id=${cartId}`);
-        // console.log(items[0]);
+        console.log(items[0].item);
 
         if(_cart.length > 0){
             if( _cart[0].customerId == order.client){
-                items[0].item.map( ({product, quantity}) => {
-                    // console.log(product);
-                    // console.log(quantity);
-                    _product =  this.productRepository.find({where: {id: product}}).then(p => p);
+                console.log(items[0].item.length);
+                items[0].item.map( async ({product, quantity}) => {
 
-                    console.log(_product);
-                    _product.then( (p)=> {
-                        if(p.length > 0){
+                    _product =  await this.productRepository.find({where: {id: product}});
 
-                            console.log("product");
-                            count ++;
-    
-                            totalPrice += p[0].price * quantity;
-                            console.log(totalPrice);
+                    count ++;
 
-                        }
-                    });
+                    totalPrice += _product[0].price * quantity;
+
+                    if(count == items[0].item.length){
+                        console.log("count match");
+                        const newOrder = await this.commandRepository.create({
+                            orderItems: _cart[0],
+                            state: "none",
+                            status: "none",
+                            shippingAddress: order.order.shippingAddress,
+                            totalPriceWithPrice: totalPrice
+                        });
+                        const _order = await this.commandRepository.save(newOrder);
+            
+                        return {order: _order};
+                    }
                 });
             }
         }
 
-        console.log("en dehors du if");
-        if(count == _cart.length){
-            console.log("count match");
-            const newOrder = await this.commandRepository.create({
-                orderItems: _cart[0],
-                state: "none",
-                status: "none",
-                shippingAddress: order.order.shippingAddress,
-                totalPriceWithPrice: totalPrice
-            });
-            const _order = await this.commandRepository.save(newOrder);
-
-            return {order: _order};
-        }
+     
     }
 
 

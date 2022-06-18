@@ -26,6 +26,8 @@ export class CommandController {
     async create(@Body() order :  CreateOrderDto, @Request() req){
         this.buyTheBasket = new CommandService(this.receiver, {order: order, client: req.user.id});
         this.invoker.setCommand(this.buyTheBasket);
-        this.invoker.executeCommand();
+        return await this.invoker.executeCommand();
     }
+
+    
 }
