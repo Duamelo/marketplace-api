@@ -18,7 +18,6 @@ import { CommandModule } from './modules/command/command.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/common/guards/roles.guard';
-
 @Module({
   imports: [
     ConfigModule.forRoot({ 

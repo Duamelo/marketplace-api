@@ -8,11 +8,14 @@ import { CustomerService } from './customer.service';
 import CreateCustomerDto from './dto/create-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import UpdateCustomerDto from './dto/update-customer.dto';
+import { Express } from 'express';
+
 
 @Controller('customer')
 export class CustomerController {
 
-    constructor(private readonly customerService: CustomerService){}
+    constructor(
+        private readonly customerService: CustomerService){}
 
     //register
     @HttpCode(200)
