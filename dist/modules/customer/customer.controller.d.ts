@@ -1,4 +1,3 @@
-/// <reference types="multer" />
 import { CustomerService } from './customer.service';
 import CreateCustomerDto from './dto/create-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
