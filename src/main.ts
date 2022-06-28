@@ -1,4 +1,3 @@
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
@@ -12,7 +11,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
   .setTitle('AHI api description')
-  .setDescription('This API is the first step to build a large markeplace system')
+  .setDescription('This API is the first step to build a large marketplace system')
   .setVersion('1.0')
   .addTag('Marketplace')
   .build();

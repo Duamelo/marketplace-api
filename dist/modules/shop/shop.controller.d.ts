@@ -6,4 +6,6 @@ export declare class ShopController {
     create(shop: CreateShopDto, req: any): Promise<"this name shop already exist. Please give another name to your shop" | {
         shop: import("./shop.entity").Shop;
     }>;
+    getAllShops(): Promise<import("./shop.entity").Shop[]>;
+    getShopByName(name: string, req: any): Promise<import("./shop.entity").Shop[]>;
 }

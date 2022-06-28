@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Cart from '../cart/cart.entity';
@@ -30,16 +30,10 @@ export class CommandReceiver {
 
         var _cart = await this.cartRepository.find({where: {id: cartId}});
 
-        console.log("cart");
-        console.log(_cart);
-        console.log(Object.keys(_cart[0].items));
-
         var items = await this.cartRepository.query(`SELECT items->'items' as item from cart where id=${cartId}`);
-        console.log(items[0].item);
 
         if(_cart.length > 0){
             if( _cart[0].customerId == order.client){
-                console.log(items[0].item.length);
                 items[0].item.map( async ({product, quantity}) => {
 
                     _product =  await this.productRepository.find({where: {id: product}});
@@ -49,7 +43,6 @@ export class CommandReceiver {
                     totalPrice += _product[0].price * quantity;
 
                     if(count == items[0].item.length){
-                        console.log("count match");
                         const newOrder = await this.commandRepository.create({
                             orderItems: _cart[0],
                             state: "none",
@@ -71,5 +64,26 @@ export class CommandReceiver {
 
     public undo(){
 
+    }
+
+    public async findAll(){
+        return await this.commandRepository.find();
+    }
+
+    public async findOneById(orderId : number){
+        return await this.commandRepository.find({where : {id : orderId}});
+    }
+
+    public async delete(orderId : number){
+        const orderExist = await this.commandRepository.find({where: {id: orderId}});
+        if(orderExist)
+            return await this.commandRepository.delete(orderId);
+    }
+
+    public async update(orderId : number, order : any){
+        const orderExist = await this.commandRepository.find({where: {id: orderId}});
+
+        if(orderExist)
+            return await this.commandRepository.update(orderId, order);
     }
 }

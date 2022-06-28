@@ -9,6 +9,6 @@ export declare class VendorService {
         user: Vendor[];
         token: string;
     }>;
-    getByEmail(email: string): Promise<Vendor>;
-    getById(id: number): Promise<Vendor>;
+    findOneByEmail(email: string): Promise<Vendor>;
+    findOneById(id: number): Promise<Vendor>;
 }

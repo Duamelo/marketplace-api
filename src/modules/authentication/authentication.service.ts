@@ -20,21 +20,18 @@ export class AuthenticationService {
     async validateUser(email: string, pass: string) {
         
         // find if user exist with this email
-        const customer = await this.customerService.getByEmail(email);
-        const vendor = await this.vendorService.getByEmail(email);
+        const customer = await this.customerService.findOneByEmail(email);
+        const vendor = await this.vendorService.findOneByEmail(email);
 
-        if (!customer && !vendor) {
+        if (!customer && !vendor)
             return null;
-        }
 
         // find if customer or vendor password match
         const match = await this.comparePassword(pass, customer ? customer.password : vendor.password);
         
-        if (!match) {
+        if (!match)
             return null;
-        }
 
-        // tslint:disable-next-line: no-string-literal
         const { password, ...result } = customer ? customer : vendor;
 
         return result;
@@ -65,5 +62,4 @@ export class AuthenticationService {
     {
         return `Authentication=; HttpOnly; Path=/; MAx-Age=0`;
     }
-
 }

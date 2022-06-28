@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
 import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
 import { CommandReceiver } from './command-receiver.service';
 import { CommandService } from './command.service';
@@ -29,5 +29,32 @@ export class CommandController {
         return await this.invoker.executeCommand();
     }
 
-    
+    @HttpCode(200)
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('all')
+    async getAllCommands(){
+        return await this.receiver.findAll();
+    }
+
+
+    @HttpCode(200)
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('id')
+    async getCommandById(@Param() id : number){
+        return await this.receiver.findOneById(id);
+    }
+
+    @HttpCode(200)
+    @UseGuards(JwtAuthenticationGuard)
+    @Delete('id')
+    async delete(@Param() id : number){
+        return await this.receiver.delete(id);
+    }
+
+    @HttpCode(200)
+    @UseGuards(JwtAuthenticationGuard)
+    @Put('orderId')
+    async updateOrder(@Param() orderId : number, @Body() order : any){
+        return await this.receiver.update(orderId, order);
+    }
 }

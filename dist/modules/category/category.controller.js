@@ -24,6 +24,21 @@ let CategoryController = class CategoryController {
     async create(category) {
         return await this.categoryService.create(category);
     }
+    async getAllCategories() {
+        return await this.categoryService.findAll();
+    }
+    async delete(id) {
+        return await this.categoryService.delete(id);
+    }
+    async update(id, category) {
+        return await this.categoryService.update(id, category);
+    }
+    async getCategoryById(id) {
+        return await this.categoryService.findOneById(id);
+    }
+    async getCategoryByName(name) {
+        return await this.categoryService.findOneByName(name);
+    }
 };
 __decorate([
     (0, common_1.HttpCode)(200),
@@ -34,6 +49,51 @@ __decorate([
     __metadata("design:paramtypes", [category_dto_1.default]),
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "create", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)('all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "getAllCategories", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Delete)('id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "delete", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Put)('id'),
+    __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, category_dto_1.default]),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "update", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)('id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "getCategoryById", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)('name'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "getCategoryByName", null);
 CategoryController = __decorate([
     (0, common_1.Controller)('category'),
     __metadata("design:paramtypes", [category_service_1.default])

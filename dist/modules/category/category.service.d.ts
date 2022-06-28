@@ -7,8 +7,10 @@ export declare class CategoryService {
     create(category: any): Promise<"this category  already exist" | {
         category: Category[];
     }>;
-    delete(category: any): Promise<void>;
-    update(category: CategoryDto): Promise<void>;
-    getCategoryByName(category: string): Promise<void>;
+    delete(id: number): Promise<void>;
+    update(id: number, category: CategoryDto): Promise<import("typeorm").UpdateResult>;
+    findOneByName(categoryName: any): Promise<Category[]>;
+    findOneById(categoryId: number): Promise<Category[]>;
+    findAll(): Promise<Category[]>;
 }
 export default CategoryService;

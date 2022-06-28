@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Request, UseGuards } from '@nestjs/common';
 import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
 import CreateShopDto from './dto/create-shop.dto';
 import { ShopService } from './shop.service';
@@ -14,6 +14,23 @@ export class ShopController {
     @Post('create')
     async create(@Body() shop: CreateShopDto, @Request() req){
         return await this.shopService.create(shop, req.user.id);
+    }
+
+
+
+    @HttpCode(200)
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('all')
+    async getAllShops(){
+        return await this.shopService.findAll();
+    }
+
+
+    @HttpCode(200)
+    @UseGuards(JwtAuthenticationGuard)
+    @Get(':name')
+    async getShopByName(@Param() name : string, @Request() req){
+        return await this.shopService.findOneByName(name, req.user.id);
     }
 }
 

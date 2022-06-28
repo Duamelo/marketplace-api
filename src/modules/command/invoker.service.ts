@@ -16,7 +16,7 @@ export class Invoker {
         this.command = command;
     }
 
-    public executeCommand(){
-        this.command.execute();
+    public async executeCommand(){
+        return await this.command.execute();
     }
 }

@@ -24,6 +24,12 @@ let ShopController = class ShopController {
     async create(shop, req) {
         return await this.shopService.create(shop, req.user.id);
     }
+    async getAllShops() {
+        return await this.shopService.findAll();
+    }
+    async getShopByName(name, req) {
+        return await this.shopService.findOneByName(name, req.user.id);
+    }
 };
 __decorate([
     (0, common_1.HttpCode)(200),
@@ -35,6 +41,24 @@ __decorate([
     __metadata("design:paramtypes", [create_shop_dto_1.default, Object]),
     __metadata("design:returntype", Promise)
 ], ShopController.prototype, "create", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)('all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ShopController.prototype, "getAllShops", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)(':name'),
+    __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], ShopController.prototype, "getShopByName", null);
 ShopController = __decorate([
     (0, common_1.Controller)('shop'),
     __metadata("design:paramtypes", [shop_service_1.ShopService])

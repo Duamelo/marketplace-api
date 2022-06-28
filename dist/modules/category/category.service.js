@@ -23,17 +23,38 @@ let CategoryService = class CategoryService {
     }
     async create(category) {
         var categoryExist = await this.categoryRepository.find({ where: { name: category.name } });
-        if (categoryExist.length > 0)
+        if (categoryExist)
             return "this category  already exist";
         const newCategory = await this.categoryRepository.create(category);
         const savedCategory = await this.categoryRepository.save(newCategory);
         return { category: savedCategory };
     }
-    async delete(category) {
+    async delete(id) {
+        const categoryExist = await this.categoryRepository.find({ where: { id: id } });
+        if (categoryExist)
+            await this.categoryRepository.delete(categoryExist[0].id);
+        throw new common_1.NotFoundException('this category does not exist');
     }
-    async update(category) {
+    async update(id, category) {
+        const categoryExist = await this.categoryRepository.find({ where: { id: id } });
+        if (categoryExist)
+            return await this.categoryRepository.update(id, category);
+        throw new common_1.NotFoundException('this category does not exist');
     }
-    async getCategoryByName(category) {
+    async findOneByName(categoryName) {
+        const categoryExist = await this.categoryRepository.find({ where: { name: categoryName } });
+        if (categoryExist)
+            return categoryExist;
+        throw new common_1.NotFoundException('this category does not exist');
+    }
+    async findOneById(categoryId) {
+        const categoryExist = await this.categoryRepository.find({ where: { id: categoryId } });
+        if (categoryExist)
+            return categoryExist;
+        throw new common_1.NotFoundException('this category does not exist');
+    }
+    async findAll() {
+        return await this.categoryRepository.find();
     }
 };
 CategoryService = __decorate([

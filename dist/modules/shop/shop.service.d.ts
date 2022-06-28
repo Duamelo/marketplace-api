@@ -7,4 +7,6 @@ export declare class ShopService {
     create(shop: CreateShopDto, vendorId: any): Promise<"this name shop already exist. Please give another name to your shop" | {
         shop: Shop;
     }>;
+    findAll(): Promise<Shop[]>;
+    findOneByName(name: string, vendorId: number): Promise<Shop[]>;
 }

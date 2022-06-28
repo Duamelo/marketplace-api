@@ -3,6 +3,7 @@ import { Connection, Repository } from 'typeorm';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import DatabaseFileService from '../database-file/database-file.service';
 import Customer from './customer.entity';
+import UpdateCustomerDto from './dto/update-customer.dto';
 export declare class CustomerService {
     private readonly customerRepository;
     private readonly registerBaseService;
@@ -13,7 +14,10 @@ export declare class CustomerService {
         user: Customer[];
         token: string;
     }>;
-    getByEmail(email: string): Promise<Customer>;
-    getById(id: number): Promise<Customer>;
+    findAll(): Promise<Customer[]>;
+    findOneByEmail(email: string): Promise<Customer>;
+    findOneById(id: number): Promise<Customer>;
+    update(id: number, post: UpdateCustomerDto): Promise<Customer>;
     addAvatar(userId: number, imageBuffer: Buffer, filename: string, mimetype: string): Promise<import("../database-file/databaseFile.entity").default>;
+    delete(id: number): Promise<void>;
 }

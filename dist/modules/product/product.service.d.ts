@@ -1,5 +1,6 @@
 import { Repository } from 'typeorm';
 import CreateProductDto from './dto/create-product.dto';
+import UpdateProductDto from './dto/update-product.dto';
 import Product from './product.entity';
 export declare class ProductService {
     private readonly productRepository;
@@ -7,6 +8,9 @@ export declare class ProductService {
     create(product: CreateProductDto): Promise<{
         product: Product;
     }>;
-    getProductById(productId: number): Promise<Product[]>;
+    findOneById(productId: number): Promise<Product[]>;
+    findAll(): Promise<Product[]>;
+    delete(id: number): Promise<import("typeorm").DeleteResult>;
+    update(productId: number, product: UpdateProductDto): Promise<import("typeorm").UpdateResult>;
 }
 export default ProductService;

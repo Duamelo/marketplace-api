@@ -19,37 +19,26 @@ export class VendorService {
 
         if(user.length == 0){
 
-        //hash the password
         const hashPassword = await this.registerBaseService.hashPassword(vendor.password);
 
         vendor.password = hashPassword;
 
-        //create the vendor
         const newVendor =  await this.vendorRepository.create(vendor);
         const _vendor = await this.vendorRepository.save(newVendor);
 
 
-        //tslin:disable-next-line: no-string-literal
-
-        // const { password, ...result } = client;
-
-
-        //generate token
         const token = await this.registerBaseService.generateToken(_vendor);
-
-
-        //return the customer and the token
 
         return { user: _vendor, token: token };
         }
     }
 
     
-    async getByEmail(email: string){
+    async findOneByEmail(email: string){
        return await this.vendorRepository.findOne( {where : {email} });
     }
 
-    async getById(id: number) {
+    async findOneById(id: number) {
         return  await this.vendorRepository.findOne({ where : { id: id } });
     }
 }

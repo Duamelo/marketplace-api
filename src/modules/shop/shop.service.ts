@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import CreateShopDto from './dto/create-shop.dto';
@@ -31,5 +31,18 @@ export class ShopService {
         const _shop = await this.shopRepository.save(newShop);
 
         return {shop: _shop};
+    }
+
+
+    async findAll(){
+        return await this.shopRepository.find({relations: ['vendor']});
+    }
+
+    async findOneByName(name : string, vendorId : number){
+        const shopExist = await this.shopRepository.find({where : {name : name, vendor: {id: vendorId}}});
+
+        if(shopExist)
+            return shopExist;
+        throw new HttpException('this shop does not exist', HttpStatus.NOT_FOUND);
     }
 }

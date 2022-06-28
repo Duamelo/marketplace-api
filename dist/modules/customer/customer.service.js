@@ -28,23 +28,59 @@ let CustomerService = class CustomerService {
     }
     async create(customer) {
         const user = await this.customerRepository.find({ where: { email: customer.email } });
-        console.log("user");
-        console.log(user);
         if (user.length == 0) {
             const hashPassword = await this.registerBaseService.hashPassword(customer.password);
             customer.password = hashPassword;
             const newCustomer = await this.customerRepository.create(customer);
             const client = await this.customerRepository.save(newCustomer);
-            console.log(client);
             const token = await this.registerBaseService.generateToken(client);
             return { user: client, token: token };
         }
+        throw new common_1.HttpException('Customer email already exist', common_1.HttpStatus.NOT_FOUND);
     }
-    async getByEmail(email) {
-        return await this.customerRepository.findOne({ where: { email } });
+    async findAll() {
+        return await this.customerRepository.find();
     }
-    async getById(id) {
-        return await this.customerRepository.findOne({ where: { id: id } });
+    async findOneByEmail(email) {
+        const customerMail = await this.customerRepository.findOne({ where: { email: `${email}` } });
+        if (customerMail)
+            return customerMail;
+        throw new common_1.HttpException('Customer email not found', common_1.HttpStatus.NOT_FOUND);
+    }
+    async findOneById(id) {
+        const customer = await this.customerRepository.findOne({ where: { id: id } });
+        if (customer)
+            return customer;
+        throw new common_1.HttpException('Customer not found.', common_1.HttpStatus.NOT_FOUND);
+    }
+    async update(id, post) {
+        const user = await this.customerRepository.find({ where: { id: id } });
+        if (user.length != 0) {
+            const user_email = await this.customerRepository.find({ where: { email: post.email } });
+            const hashPassword = await this.registerBaseService.hashPassword(post.password);
+            post.password = hashPassword;
+            if (user_email.length == 0) {
+                await this.customerRepository.update(id, post);
+                const updatedCustomer = await this.customerRepository.findOne({ where: { id: id } });
+                if (updatedCustomer) {
+                    return updatedCustomer;
+                }
+                throw new common_1.HttpException('Failed to update', common_1.HttpStatus.NOT_FOUND);
+            }
+            else {
+                const mail_exist = await this.customerRepository.findOne({ where: { id: id } });
+                if (mail_exist.email == post.email) {
+                    await this.customerRepository.update(id, post);
+                    const updatedCustomer = await this.customerRepository.findOne({ where: { id: id } });
+                    if (updatedCustomer) {
+                        return updatedCustomer;
+                    }
+                    throw new common_1.HttpException('Failed to update', common_1.HttpStatus.NOT_FOUND);
+                }
+                throw new common_1.HttpException('Email already exist.', common_1.HttpStatus.NOT_FOUND);
+            }
+        }
+        throw new common_1.HttpException('Customer not found', common_1.HttpStatus.NOT_FOUND);
     }
     async addAvatar(userId, imageBuffer, filename, mimetype) {
         const queryRunner = this.connection.createQueryRunner();
@@ -70,6 +106,17 @@ let CustomerService = class CustomerService {
         finally {
             await queryRunner.release();
         }
+    }
+    async delete(id) {
+        const user = await this.customerRepository.find({ where: { id: id } });
+        if (user.length != 0) {
+            const deletedCustomer = await this.customerRepository.delete(id);
+            if (!deletedCustomer.affected)
+                throw new common_1.HttpException('Failed to delete', common_1.HttpStatus.NOT_FOUND);
+            else
+                throw new common_1.HttpException('Le client ' + user[0].firstName + ' ' + user[0].lastName + ' a été supprimé avec succès', common_1.HttpStatus.FOUND);
+        }
+        throw new common_1.HttpException('Customer not found', common_1.HttpStatus.NOT_FOUND);
     }
 };
 CustomerService = __decorate([

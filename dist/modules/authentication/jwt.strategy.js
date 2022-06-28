@@ -31,8 +31,8 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         this.configService = configService;
     }
     async validate(payload) {
-        const customer = await this.customerService.getById(payload.userId);
-        const vendor = await this.vendorService.getById(payload.userId);
+        const customer = await this.customerService.findOneById(payload.userId);
+        const vendor = await this.vendorService.findOneById(payload.userId);
         if (!customer && !vendor) {
             throw new common_1.UnauthorizedException('You are not authorized to perform the operation');
         }

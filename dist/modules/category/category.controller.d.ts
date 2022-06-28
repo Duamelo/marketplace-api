@@ -6,4 +6,9 @@ export declare class CategoryController {
     create(category: CategoryDto): Promise<"this category  already exist" | {
         category: import("./category.entity").Category[];
     }>;
+    getAllCategories(): Promise<import("./category.entity").Category[]>;
+    delete(id: number): Promise<void>;
+    update(id: number, category: CategoryDto): Promise<import("typeorm").UpdateResult>;
+    getCategoryById(id: number): Promise<import("./category.entity").Category[]>;
+    getCategoryByName(name: number): Promise<import("./category.entity").Category[]>;
 }

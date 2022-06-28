@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], VendorController.prototype, "register", null);
 VendorController = __decorate([
-    (0, common_1.Controller)('vendor'),
+    (0, common_1.Controller)('vendor/dashboard'),
     __metadata("design:paramtypes", [vendor_service_1.VendorService])
 ], VendorController);
 exports.VendorController = VendorController;

@@ -37,15 +37,13 @@ let AuthenticationService = class AuthenticationService {
         this.registerBaseService = registerBaseService;
     }
     async validateUser(email, pass) {
-        const customer = await this.customerService.getByEmail(email);
-        const vendor = await this.vendorService.getByEmail(email);
-        if (!customer && !vendor) {
+        const customer = await this.customerService.findOneByEmail(email);
+        const vendor = await this.vendorService.findOneByEmail(email);
+        if (!customer && !vendor)
             return null;
-        }
         const match = await this.comparePassword(pass, customer ? customer.password : vendor.password);
-        if (!match) {
+        if (!match)
             return null;
-        }
         const _a = customer ? customer : vendor, { password } = _a, result = __rest(_a, ["password"]);
         return result;
     }

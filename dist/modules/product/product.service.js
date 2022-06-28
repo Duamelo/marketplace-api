@@ -30,7 +30,7 @@ let ProductService = class ProductService {
         const _product = await this.productRepository.save(newProduct);
         return { product: _product };
     }
-    async getProductById(productId) {
+    async findOneById(productId) {
         return await this.productRepository.find({ where: {
                 id: productId,
             },
@@ -39,6 +39,19 @@ let ProductService = class ProductService {
                 categories: true
             }
         });
+    }
+    async findAll() {
+        return await this.productRepository.find();
+    }
+    async delete(id) {
+        const productExist = await this.productRepository.find({ where: { id: id } });
+        if (productExist)
+            return await this.productRepository.delete(id);
+    }
+    async update(productId, product) {
+        const productExist = await this.productRepository.find({ where: { id: productId } });
+        if (productExist)
+            return await this.productRepository.update(productId, product);
     }
 };
 ProductService = __decorate([

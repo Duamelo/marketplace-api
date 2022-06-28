@@ -16,6 +16,7 @@ exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_authentication_guard_1 = require("../authentication/jwt.authentication.guard");
 const create_product_dto_1 = require("./dto/create-product.dto");
+const update_product_dto_1 = require("./dto/update-product.dto");
 const product_service_1 = require("./product.service");
 let ProductController = class ProductController {
     constructor(productService) {
@@ -25,7 +26,16 @@ let ProductController = class ProductController {
         return await this.productService.create(product);
     }
     async getProductById(productId) {
-        return await this.productService.getProductById(productId);
+        return await this.productService.findOneById(productId);
+    }
+    async deleteProduct(id) {
+        return await this.productService.delete(id);
+    }
+    async getAllProduct() {
+        return await this.productService.findAll();
+    }
+    async updatePost(id, post) {
+        return await this.productService.update(id, post);
     }
 };
 __decorate([
@@ -41,11 +51,38 @@ __decorate([
     (0, common_1.HttpCode)(200),
     (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
     (0, common_1.Get)(':productId'),
-    __param(0, (0, common_1.Param)('productId', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getProductById", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "deleteProduct", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Get)(':all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getAllProduct", null);
+__decorate([
+    (0, common_1.HttpCode)(200),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, update_product_dto_1.default]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "updatePost", null);
 ProductController = __decorate([
     (0, common_1.Controller)('products'),
     __metadata("design:paramtypes", [product_service_1.default])

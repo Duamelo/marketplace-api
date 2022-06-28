@@ -32,6 +32,15 @@ let ShopService = class ShopService {
         const _shop = await this.shopRepository.save(newShop);
         return { shop: _shop };
     }
+    async findAll() {
+        return await this.shopRepository.find({ relations: ['vendor'] });
+    }
+    async findOneByName(name, vendorId) {
+        const shopExist = await this.shopRepository.find({ where: { name: name, vendor: { id: vendorId } } });
+        if (shopExist)
+            return shopExist;
+        throw new common_1.HttpException('this shop does not exist', common_1.HttpStatus.NOT_FOUND);
+    }
 };
 ShopService = __decorate([
     (0, common_1.Injectable)(),

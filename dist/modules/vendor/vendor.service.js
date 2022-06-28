@@ -34,10 +34,10 @@ let VendorService = class VendorService {
             return { user: _vendor, token: token };
         }
     }
-    async getByEmail(email) {
+    async findOneByEmail(email) {
         return await this.vendorRepository.findOne({ where: { email } });
     }
-    async getById(id) {
+    async findOneById(id) {
         return await this.vendorRepository.findOne({ where: { id: id } });
     }
 };
