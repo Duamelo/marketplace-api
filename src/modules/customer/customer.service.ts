@@ -136,7 +136,6 @@ export class CustomerService {
 
 
     async delete(id: number) {
-
         const user = await this.customerRepository.find({where : {id: id}});
 
         if (user.length != 0){

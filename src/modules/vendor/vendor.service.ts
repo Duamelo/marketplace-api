@@ -25,14 +25,11 @@ export class VendorService {
 
         const newVendor =  await this.vendorRepository.create(vendor);
         const _vendor = await this.vendorRepository.save(newVendor);
-
-
         const token = await this.registerBaseService.generateToken(_vendor);
 
         return { user: _vendor, token: token };
         }
     }
-
     
     async findOneByEmail(email: string){
        return await this.vendorRepository.findOne( {where : {email} });
