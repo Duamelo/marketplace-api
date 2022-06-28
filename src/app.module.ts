@@ -18,9 +18,12 @@ import { CommandModule } from './modules/command/command.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/common/guards/roles.guard';
+import { MailModule } from './modules/mail/mail.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ 
+      isGlobal: true,
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
@@ -30,6 +33,11 @@ import { RolesGuard } from './modules/common/guards/roles.guard';
         PORT: Joi.number(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
+
+        //pour la confirmation d'email
+        JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
+        JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+        EMAIL_CONFIRMATION_URL: Joi.string().required(),
       })
     }),
     DatabaseModule,
@@ -44,7 +52,8 @@ import { RolesGuard } from './modules/common/guards/roles.guard';
     ImagesHandlerModule,
     CartModule,
     CommandModule,
-    ShippingModule
+    ShippingModule,
+    MailModule,
   ],
   controllers: [
     AppController

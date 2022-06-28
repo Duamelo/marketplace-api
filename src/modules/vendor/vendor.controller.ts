@@ -3,7 +3,6 @@ import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
 import { Roles } from '../common/decorators/core/roles.decorator';
 import { DoesUserExist } from '../common/guards/doesUserExist.guard';
 import Role from '../common/roles/role.enum';
-import UpdateCustomerDto from '../customer/dto/update-customer.dto';
 import CreateVendorDto from './dto/create-vendor.dto';
 import UpdateVendorDto from './dto/update-vendor.dto';
 import { VendorService } from './vendor.service';

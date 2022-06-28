@@ -9,23 +9,33 @@ import CreateCustomerDto from './dto/create-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import UpdateCustomerDto from './dto/update-customer.dto';
 import { Express } from 'express';
+import ConfirmEmailDto from './dto/confirmationEmail.dto';
+import Customer from './customer.entity';
+//import { MailService } from '../mail/mail.service';
 
 
 @Controller('customer')
 export class CustomerController {
 
     constructor(
-        private readonly customerService: CustomerService){}
+        private customerService: CustomerService ){}
 
     //register
     @HttpCode(200)
     //@UseGuards(DoesUserExist)
-    @UsePipes(ValidationPipe)
-    @UsePipes(new ValidationPipe({transform:true}))
+
     @Post('register')
+    @UsePipes(new ValidationPipe({transform:true}))
     async register(@Body() customer: CreateCustomerDto) {
         return await this.customerService.create(customer);
     }
+
+    @Post('confirm')
+    async confirm(@Body() confirmationData: ConfirmEmailDto) {
+        const email = await this.customerService.decodeConfirmationToken(confirmationData.token, Customer);
+        await this.customerService.confirmEmail(email);
+    }
+
 
     @Post('avatar')
     @UseGuards(JwtAuthenticationGuard)

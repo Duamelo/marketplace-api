@@ -14,6 +14,10 @@ class CreateCustomerDto {
     @IsNotEmpty({message: 'email requis svp'})
     @IsEmail()
     readonly email: string;
+
+
+    @IsNotEmpty()
+    readonly isEmailConfirmed: boolean = false;
     
 
     @IsNotEmpty({message: 'Numéro de teléphone requis svp'})

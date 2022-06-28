@@ -1,8 +1,10 @@
-import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import DatabaseFileService from '../database-file/database-file.service';
+import { MailService } from '../mail/mail.service';
 import Customer from './customer.entity';
 import UpdateCustomerDto from './dto/update-customer.dto';
 
@@ -14,6 +16,7 @@ export class CustomerService {
         private readonly customerRepository: Repository<Customer>,
         private readonly registerBaseService: RegisterBaseService,
         private readonly databaseFilesService: DatabaseFileService,
+        private readonly mailService: MailService,
         private  connection: Connection
         ){}
 
@@ -35,15 +38,49 @@ export class CustomerService {
             const client = await this.customerRepository.save(newCustomer);
 
             //tslin:disable-next-line: no-string-literal
-                console.log(client);
+                //console.log(client);
+                //console.log(process.env.JWT_SECRET)
             // const { password, ...result } = client;
             //generate token
             const token = await this.registerBaseService.generateToken(client);
+
+            await this.mailService.sendUserConfirmation(customer, customer.id); //sending mail confirmation
             //return the customer and the token
             return { user: client, token: token };
         }
         throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
     }
+
+    
+    //confirmer le mail dans la bd
+    public async confirmEmail(email: string) {
+        const user = await this.customerRepository.findOne( {where : {email : `${email}`} });
+        if (user.isEmailConfirmed) {
+          throw new BadRequestException('Email already confirmed');
+        }
+        else {
+            return this.customerRepository.update({ email }, {
+                isEmailConfirmed: true
+            });
+        }
+    }
+
+
+
+    public async decodeConfirmationToken(token: string, user) {
+        try {
+            const newtoken = await this.registerBaseService.generateToken(user);
+            if (newtoken == token){
+                return user.email;
+            }
+            throw new BadRequestException();
+        } catch (error) {
+          if (error?.name === 'TokenExpiredError') {
+            throw new BadRequestException('Email confirmation token expired');
+          }
+          throw new BadRequestException('Bad confirmation token');
+        }
+      }
 
     //find all
     async getAllCustomer() {

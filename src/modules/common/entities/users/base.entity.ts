@@ -24,6 +24,9 @@ export abstract class User {
     @Column({ type: 'varchar', length: 300 })
     public email: string;
 
+    //confirmation d'email
+    @Column({ default: false })
+    public isEmailConfirmed: boolean;
 
     //phone
     @Column({ type: 'varchar', length: 300 })
