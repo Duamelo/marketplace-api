@@ -4,6 +4,7 @@ export declare class VendorDto {
     email: string;
     phone: string;
     address: string;
+    role: string;
     password: string;
 }
 export default VendorDto;

@@ -9,6 +9,6 @@ export declare class JwtStrategy extends JwtStrategy_base {
     private readonly vendorService;
     private readonly configService;
     constructor(customerService: CustomerService, vendorService: VendorService, configService: ConfigService);
-    validate(payload: TokenPayload): Promise<import("../customer/customer.entity").Customer | import("../vendor/vendor.entity").Vendor>;
+    validate(payload: TokenPayload): Promise<import("../vendor/vendor.entity").Vendor | import("../customer/customer.entity").Customer>;
 }
 export {};

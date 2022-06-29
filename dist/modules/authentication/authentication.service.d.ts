@@ -17,8 +17,12 @@ export declare class AuthenticationService {
         email: string;
         phone: string;
         address: string;
+<<<<<<< HEAD
+        role: import("../common/roles/role.enum").default;
+=======
         avatar?: import("../database-file/databaseFile.entity").default;
         avatarId?: number;
+>>>>>>> main
     }>;
     login(user: any): Promise<{
         user: any;

@@ -1,8 +1,7 @@
-import { IsNotEmpty, MinLength, IsEmail } from 'class-validator';
+import { IsNotEmpty, MinLength, IsEmail, IsNumber } from 'class-validator';
 import Role from 'src/modules/common/roles/role.enum';
 
-class CreateCustomerDto {
-
+class UpdateVendorDto {
     @IsNotEmpty({message: 'Nom requis svp'})
     readonly firstName: string;
 
@@ -14,10 +13,6 @@ class CreateCustomerDto {
     @IsNotEmpty({message: 'email requis svp'})
     @IsEmail()
     readonly email: string;
-
-
-    @IsNotEmpty()
-    readonly isEmailConfirmed: boolean = false;
     
 
     @IsNotEmpty({message: 'Numéro de teléphone requis svp'})
@@ -27,13 +22,12 @@ class CreateCustomerDto {
     @IsNotEmpty({message: 'Adresse requis svp'})
     readonly address: string;
     
-    @IsNotEmpty()
-    readonly role: string = Role.Customer;
+    readonly role: Role.Vendor;
 
     @IsNotEmpty({message: 'Mot de passe requis svp'})
     @MinLength(6, {
         message: 'Mot de passe trop court',
     })
-    readonly password: string;
+    password: string;
 }
-export default CreateCustomerDto;
+export default UpdateVendorDto;

@@ -9,7 +9,8 @@ import { CustomerModule } from '../customer/customer.module';
 import { RegisterBaseServiceModule } from '../common/services/register-base-service/register-base-service.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { VendorModule } from '../vendor/vendor.module';
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [

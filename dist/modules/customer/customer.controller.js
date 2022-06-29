@@ -17,10 +17,15 @@ const common_1 = require("@nestjs/common");
 <<<<<<< HEAD
 const platform_express_1 = require("@nestjs/platform-express");
 const jwt_authentication_guard_1 = require("../authentication/jwt.authentication.guard");
+<<<<<<< HEAD
+const roles_decorator_1 = require("../common/decorators/core/roles.decorator");
+const role_enum_1 = require("../common/roles/role.enum");
+=======
 const doesUserExist_guard_1 = require("../common/guards/doesUserExist.guard");
 =======
 const jwt_authentication_guard_1 = require("../authentication/jwt.authentication.guard");
 >>>>>>> f9045c72487abed600862f17274d924fdc77e514
+>>>>>>> main
 const customer_service_1 = require("./customer.service");
 const create_customer_dto_1 = require("./dto/create-customer.dto");
 const update_customer_dto_1 = require("./dto/update-customer.dto");
@@ -55,6 +60,7 @@ let CustomerController = class CustomerController {
 __decorate([
     (0, common_1.HttpCode)(200),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe({ transform: true })),
     (0, common_1.Post)('register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -62,6 +68,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CustomerController.prototype, "register", null);
 __decorate([
+<<<<<<< HEAD
+    (0, roles_decorator_1.Roles)(role_enum_1.default.Admin),
+=======
 <<<<<<< HEAD
     (0, common_1.Post)('avatar'),
     (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
@@ -73,12 +82,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CustomerController.prototype, "addAvatar", null);
 =======
+>>>>>>> main
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], CustomerController.prototype, "getCustomer", null);
 __decorate([
+    (0, roles_decorator_1.Roles)(role_enum_1.default.Admin),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -95,6 +106,7 @@ __decorate([
 __decorate([
     (0, common_1.HttpCode)(200),
     (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
+    (0, roles_decorator_1.Roles)(role_enum_1.default.Customer),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -103,7 +115,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CustomerController.prototype, "update", null);
 __decorate([
-    (0, common_1.HttpCode)(200),
+    (0, roles_decorator_1.Roles)(role_enum_1.default.Admin),
     (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

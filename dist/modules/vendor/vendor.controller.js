@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VendorController = void 0;
 const common_1 = require("@nestjs/common");
-const doesUserExist_guard_1 = require("../common/guards/doesUserExist.guard");
 const create_vendor_dto_1 = require("./dto/create-vendor.dto");
 const vendor_service_1 = require("./vendor.service");
 let VendorController = class VendorController {
@@ -27,8 +26,8 @@ let VendorController = class VendorController {
 };
 __decorate([
     (0, common_1.HttpCode)(200),
-    (0, common_1.UseGuards)(doesUserExist_guard_1.DoesUserExist),
     (0, common_1.Post)('register'),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe({ transform: true })),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_vendor_dto_1.default]),

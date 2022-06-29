@@ -10,7 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
+const role_enum_1 = require("../../common/roles/role.enum");
 class CreateCustomerDto {
+    constructor() {
+        this.role = role_enum_1.default.Customer;
+    }
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'Nom requis svp' }),
@@ -33,6 +37,10 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'Adresse requis svp' }),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "address", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateCustomerDto.prototype, "role", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'Mot de passe requis svp' }),
     (0, class_validator_1.MinLength)(6, {

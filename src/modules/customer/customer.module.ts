@@ -6,9 +6,13 @@ import Customer from './customer.entity';
 import { RegisterBaseServiceModule } from '../common/services/register-base-service/register-base-service.module';
 import { VendorModule } from '../vendor/vendor.module';
 import { DatabaseFileModule } from '../database-file/database-file.module';
+import { MailModule } from '../mail/mail.module';
+import { MailService } from '../mail/mail.service';
 
 @Module({
   imports: [
+    MailModule,
+    MailService,
     forwardRef( () => VendorModule),
     RegisterBaseServiceModule,
     DatabaseFileModule,

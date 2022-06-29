@@ -33,6 +33,7 @@ let VendorService = class VendorService {
             const token = await this.registerBaseService.generateToken(_vendor);
             return { user: _vendor, token: token };
         }
+        throw new common_1.HttpException('Vendor email already exist', common_1.HttpStatus.NOT_FOUND);
     }
     async getByEmail(email) {
         return await this.vendorRepository.findOne({ where: { email } });

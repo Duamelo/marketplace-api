@@ -20,14 +20,15 @@ const register_base_service_module_1 = require("./modules/common/services/regist
 const shop_module_1 = require("./modules/shop/shop.module");
 const product_module_1 = require("./modules/product/product.module");
 const category_module_1 = require("./modules/category/category.module");
-<<<<<<< HEAD
+
 const database_file_module_1 = require("./modules/database-file/database-file.module");
 const images_handler_module_1 = require("./modules/images-handler/images-handler.module");
 const cart_module_1 = require("./modules/cart/cart.module");
 const command_module_1 = require("./modules/command/command.module");
-=======
+
 const shipping_module_1 = require("./modules/shipping/shipping.module");
->>>>>>> f9045c72487abed600862f17274d924fdc77e514
+const core_1 = require("@nestjs/core");
+const roles_guard_1 = require("./modules/common/guards/roles.guard");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -53,20 +54,17 @@ AppModule = __decorate([
             shop_module_1.ShopModule,
             product_module_1.ProductModule,
             category_module_1.CategoryModule,
-<<<<<<< HEAD
-            database_file_module_1.DatabaseFileModule,
-            images_handler_module_1.ImagesHandlerModule,
-            cart_module_1.CartModule,
-            command_module_1.CommandModule
-=======
             shipping_module_1.ShippingModule
->>>>>>> f9045c72487abed600862f17274d924fdc77e514
         ],
         controllers: [
             app_controller_1.AppController
         ],
         providers: [
             app_service_1.AppService,
+            {
+                provide: core_1.APP_GUARD,
+                useClass: roles_guard_1.RolesGuard
+            },
         ],
     })
 ], AppModule);

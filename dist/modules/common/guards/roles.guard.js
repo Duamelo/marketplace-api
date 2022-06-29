@@ -12,28 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RolesGuard = void 0;
 const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
+const roles_decorator_1 = require("../decorators/core/roles.decorator");
 let RolesGuard = class RolesGuard {
     constructor(reflector) {
         this.reflector = reflector;
     }
     canActivate(context) {
-        const roles = this.reflector.get('roles', context.getHandler());
-        if (!roles) {
+        const requiredRoles = this.reflector.getAllAndOverride(roles_decorator_1.ROLES_KEY, [
+            context.getHandler(),
+            context.getClass(),
+        ]);
+        if (!requiredRoles) {
             return true;
         }
-        const req = context.switchToHttp().getRequest();
-        const user = req.user;
-        const hasRole = () => user.roles.some((role) => roles.indexOf(role) > -1);
-        let hasPermission = false;
-        if (hasRole()) {
-            hasPermission = true;
-            if (req.params.email || req.body.email) {
-                if (req.user.email != req.params.email && req.user.email != req.body.email) {
-                    hasPermission = false;
-                }
-            }
-        }
-        return user && user.roles && hasPermission;
     }
 };
 RolesGuard = __decorate([
