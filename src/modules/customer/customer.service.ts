@@ -37,11 +37,6 @@ export class CustomerService {
             const newCustomer =  await this.customerRepository.create(customer);
             const client = await this.customerRepository.save(newCustomer);
 
-            //tslin:disable-next-line: no-string-literal
-                //console.log(client);
-                //console.log(process.env.JWT_SECRET)
-            // const { password, ...result } = client;
-            //generate token
             const token = await this.registerBaseService.generateToken(client);
 
             await this.mailService.sendUserConfirmation(customer, customer.id); //sending mail confirmation

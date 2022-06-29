@@ -27,7 +27,7 @@ export class CustomerController {
     @Post('register')
     @UsePipes(new ValidationPipe({transform:true}))
     async register(@Body() customer: CreateCustomerDto) {
-        return await this.customerService.create(customer);
+        return this.customerService.create(customer);
     }
 
     @Post('confirm')
