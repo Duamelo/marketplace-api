@@ -1,4 +1,4 @@
-import { IsNotEmpty, MinLength, IsEmail, IsNumber } from 'class-validator';
+import { IsNotEmpty, MinLength, IsEmail } from 'class-validator';
 
 class UpdateCustomerDto {
     @IsNotEmpty({message: 'Nom requis svp'})

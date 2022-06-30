@@ -35,11 +35,27 @@ export class ShopService {
 
 
     async findAll(){
-        return await this.shopRepository.find({relations: ['vendor']});
+        return await this.shopRepository.find({
+            relations : {
+                products : true,
+                vendor : true
+            }
+        });
     }
 
     async findOneByName(name : string, vendorId : number){
-        const shopExist = await this.shopRepository.find({where : {name : name, vendor: {id: vendorId}}});
+        const shopExist = await this.shopRepository.find({
+            where : {
+                name : name, 
+                vendor : {
+                    id: vendorId
+                }
+            },
+            relations : {
+                products : true,
+                vendor : true
+            }
+        });
 
         if(shopExist)
             return shopExist;

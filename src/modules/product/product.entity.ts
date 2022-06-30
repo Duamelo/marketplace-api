@@ -20,7 +20,9 @@ export class Product {
     @Column()
     reference: string;
 
-    @ManyToMany(() => Category)
+    @ManyToMany(() => Category, (category) => category.products, {
+        cascade: true,
+    })
     @JoinTable()
     categories: Category[];
 

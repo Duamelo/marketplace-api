@@ -27,5 +27,4 @@ class CreateVendorDto {
     @MinLength(6)
     readonly password: string;
 }
-
 export default CreateVendorDto;

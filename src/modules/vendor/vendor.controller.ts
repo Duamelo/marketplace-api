@@ -3,7 +3,7 @@ import { DoesUserExist } from '../common/guards/doesUserExist.guard';
 import CreateVendorDto from './dto/create-vendor.dto';
 import { VendorService } from './vendor.service';
 
-@Controller('vendor/dashboard')
+@Controller('vendor')
 export class VendorController {
 
     constructor(

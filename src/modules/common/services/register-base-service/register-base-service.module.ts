@@ -20,5 +20,5 @@ import RegisterBaseService from './register-base-service';
     providers: [RegisterBaseService],
     controllers: [],
     exports: [RegisterBaseService]
-  })
-export class RegisterBaseServiceModule {}
+})
+export class RegisterBaseServiceModule {};

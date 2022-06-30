@@ -15,7 +15,7 @@ export class CategoryService {
     async create(category){
         var categoryExist = await this.categoryRepository.find({where: {name: category.name}});
 
-        if(categoryExist)
+        if(categoryExist.length != 0)
             return "this category  already exist";
         
         const newCategory = await this.categoryRepository.create(category);
@@ -28,7 +28,7 @@ export class CategoryService {
     async delete(id : number){
         const categoryExist = await this.categoryRepository.find({where: {id: id}});
 
-        if(categoryExist)
+        if(categoryExist.length != 0)
             await this.categoryRepository.delete(categoryExist[0].id);
         throw new NotFoundException('this category does not exist');
     }

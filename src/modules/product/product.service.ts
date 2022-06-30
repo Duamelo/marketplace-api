@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import Category from '../category/category.entity';
 import CreateProductDto from './dto/create-product.dto';
 import ProductDto from './dto/product.dto';
 import UpdateProductDto from './dto/update-product.dto';
@@ -11,20 +12,28 @@ export class ProductService {
     constructor(
         @InjectRepository(Product)
         private readonly productRepository: Repository<Product>,
+        @InjectRepository(Category)
+        private readonly categoriesRepository: Repository<Category>
     ){}
 
     async create(product: CreateProductDto){
 
             const id = product.shopId;
-            // const name = product.productName;
+            var _categories = [];
 
+            for(var i = 0; i < product.categories.length; i++){
+                var catExist = await this.categoriesRepository.find({where : { name : product.categories[i]}});
+                if(catExist.length != 0)
+                    _categories.push(catExist[0]);
+            }
             const rest: ProductDto = product;
 
             const newProduct = await this.productRepository.create({
                 ...rest,
                 shop: {
                     id
-                }
+                },
+                categories: _categories
             });
 
             const _product = await this.productRepository.save(newProduct);
@@ -39,9 +48,18 @@ export class ProductService {
             },
             relations :{
                 images: true,
-                categories: true
+                categories: true,
+                shop: true
             }
         })
+    }
+
+    async findOneByIdAndShop(productId: number, shopId: number){
+        return await this.productRepository
+            .createQueryBuilder("product")
+            .where("product.id = :productId", {productId: productId})
+            .andWhere("shopId = :shopId", {shopId: shopId})
+            .getOne();
     }
 
     async findAll(){
@@ -51,7 +69,7 @@ export class ProductService {
     async delete(id: number){
         const productExist = await this.productRepository.find({where : {id: id}});
 
-        if(productExist)
+        if(productExist.length != 0)
             return await this.productRepository.delete(id);
     }
 

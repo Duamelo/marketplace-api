@@ -11,7 +11,6 @@ export class ImagesHandlerService {
         private readonly imageHandlerRepository: Repository<ImageHandler>
     ){}
 
-
     async add(dataBuffer: Buffer, filename: string, mimetype: string, productId: number){
         const newImage = await this.imageHandlerRepository.create({
             filename,
@@ -32,8 +31,6 @@ export class ImagesHandlerService {
           throw new NotFoundException();
         }
         return file;
-      }
-
-
+    }
 }
 export default ImagesHandlerService;

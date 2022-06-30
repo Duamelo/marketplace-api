@@ -11,7 +11,6 @@ import JwtAuthenticationGuard from './jwt.authentication.guard';
 export class AuthenticationController {
     constructor(private authService: AuthenticationService){}
 
-
     @UseGuards(JwtAuthenticationGuard)
     @Get()
     authenticate(@Req() request: RequestWithCustomer)
@@ -41,5 +40,4 @@ export class AuthenticationController {
         response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
         return response.sendStatus(200);
     }
-
 }

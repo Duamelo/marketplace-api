@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Controller, Get, Param, ParseIntPipe, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Readable } from 'typeorm/platform/PlatformTools';
@@ -17,7 +17,7 @@ export class ImagesHandlerController {
     @Post('add/:productId')
     @UseGuards(JwtAuthenticationGuard)
     @UseInterceptors(FileInterceptor('file'))
-    async add(@Req() request: RequestWithVendor, @UploadedFile() file: Express.Multer.File, @Param('productId', ParseIntPipe) productId: number){
+    async add(@Req() request: RequestWithVendor, @UploadedFile() file: Express.Multer.File, @Param() productId: number){
         return await this.imageHandlerService.add(file.buffer, file.originalname, file.mimetype, productId);
     }
 

@@ -3,7 +3,7 @@ import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
 import CategoryService from './category.service';
 import CategoryDto from './dto/category.dto';
 
-@Controller('category')
+@Controller('categories')
 export class CategoryController {
     constructor(
         private readonly categoryService: CategoryService

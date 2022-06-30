@@ -23,8 +23,8 @@ async function bootstrap() {
     ) => methodKey
   };
   
-const document = SwaggerModule.createDocument(app, config, options);
-SwaggerModule.setup('documentation', app, document);
+  const document = SwaggerModule.createDocument(app, config, options);
+  SwaggerModule.setup('documentation', app, document);
 
 
 

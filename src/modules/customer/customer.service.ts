@@ -44,14 +44,14 @@ export class CustomerService {
         const customerMail = await this.customerRepository.findOne( {where : {email : `${email}`} });
         if (customerMail)
             return customerMail;
-        throw new HttpException('Customer email not found', HttpStatus.NOT_FOUND);
+        // throw new HttpException('Customer email not found', HttpStatus.NOT_FOUND);
     }
 
     async findOneById(id: number) {
         const customer = await this.customerRepository.findOne({ where : { id: id } });
         if (customer)
             return customer;
-        throw new HttpException('Customer not found.', HttpStatus.NOT_FOUND);
+        // throw new HttpException('Customer not found.', HttpStatus.NOT_FOUND);
     }
 
 

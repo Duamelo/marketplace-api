@@ -32,10 +32,25 @@ export class VendorService {
     }
     
     async findOneByEmail(email: string){
-       return await this.vendorRepository.findOne( {where : {email} });
+       return await this.vendorRepository.findOne( {
+           where : {
+               email
+           },
+           relations : {
+               shops : true
+           }
+
+       });
     }
 
     async findOneById(id: number) {
-        return  await this.vendorRepository.findOne({ where : { id: id } });
+        return  await this.vendorRepository.findOne({
+             where : {
+                id: id 
+            },
+            relations: {
+                shops: true
+            } 
+        });
     }
 }
