@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class RegisterBaseService {
     constructor(
-        private  jwtService: JwtService,
+        private  readonly jwtService: JwtService,
     ){ }
 
     public async generateToken(user){

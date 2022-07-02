@@ -39,8 +39,7 @@ export class ProductController {
     }
 
     @HttpCode(200)
-    @UseGuards(JwtAuthenticationGuard)
-    @Get('/all')
+    @Get()
     async getAllProduct(){
         return await this.productService.findAll();
     }

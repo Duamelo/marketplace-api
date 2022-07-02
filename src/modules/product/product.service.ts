@@ -57,13 +57,20 @@ export class ProductService {
     async findOneByIdAndShop(productId: number, shopId: number){
         return await this.productRepository
             .createQueryBuilder("product")
+            .leftJoinAndSelect("product.shop", "shop")
             .where("product.id = :productId", {productId: productId})
-            .andWhere("shopId = :shopId", {shopId: shopId})
+            .andWhere("shop.id = :shopId", {shopId: shopId})
             .getOne();
     }
 
     async findAll(){
-        return await this.productRepository.find();
+        return await this.productRepository.find({
+            relations : {
+                 shop : true, 
+                 categories : true, 
+                 images : true
+            }
+        });
     }
 
     async delete(id: number){
