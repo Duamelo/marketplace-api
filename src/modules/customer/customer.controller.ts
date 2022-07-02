@@ -7,20 +7,24 @@ import CreateCustomerDto from './dto/create-customer.dto';
 import UpdateCustomerDto from './dto/update-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import { Express } from 'express'
+import { MailService } from '../mail/mail.service';
 
 
 @Controller('customer')
 export class CustomerController {
 
     constructor(
-        private customerService: CustomerService
+        private customerService: CustomerService,
+        private readonly mailService: MailService
         ){}
 
     @HttpCode(200)
     @UseGuards(DoesUserExist)
     @Post('register')
     async register(@Body() customer: CreateCustomerDto) {
-        return await this.customerService.create(customer);
+        const user = await this.customerService.create(customer);
+        //await this.mailService.sendVerificationLink(customer.email);
+        return user;
     }
 
     @Post('avatar')
