@@ -7,7 +7,7 @@ import CreateCustomerDto from './dto/create-customer.dto';
 import UpdateCustomerDto from './dto/update-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import { Express } from 'express'
-import { MailService } from '../mail/mail.service';
+// import { MailService } from '../mail/mail.service';
 
 
 @Controller('customer')
@@ -15,7 +15,7 @@ export class CustomerController {
 
     constructor(
         private customerService: CustomerService,
-        private readonly mailService: MailService
+        // private readonly mailService: MailService
         ){}
 
     @HttpCode(200)

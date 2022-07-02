@@ -1,11 +1,10 @@
-import { Inject, Injectable, ParseIntPipe } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createTransport } from 'nodemailer';
 import * as Mail from 'nodemailer/lib/mailer';
 import { Repository } from 'typeorm';
-import { TokenPayload } from '../authentication/interfaces/tokenPayload.interfaces';
 import Customer from '../customer/customer.entity';
 
 @Injectable()
@@ -21,10 +20,10 @@ export class MailService {
     
     {
     this.nodemailerTransport = createTransport({
-      service: configService.get('MAIL_SERVICE'),
+      service: this.configService.get('MAIL_SERVICE'),
       auth: {
-        user: configService.get('MAIL_USER'),
-        pass: configService.get('MAIL_PASSWORD'),
+        user: this.configService.get('MAIL_USER'),
+        pass: this.configService.get('MAIL_PASSWORD'),
       }
     });
     }

@@ -15,7 +15,7 @@ import { DatabaseFileModule } from './modules/database-file/database-file.module
 import { ImagesHandlerModule } from './modules/images-handler/images-handler.module';
 import { CartModule } from './modules/cart/cart.module';
 import { CommandModule } from './modules/command/command.module';
-import { MailModule } from './modules/mail/mail.module';
+// import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -29,14 +29,12 @@ import { MailModule } from './modules/mail/mail.module';
         PORT: Joi.number(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
-        //mail
-        MAIL_SERVICE: Joi.string().required(),
-        MAIL_USER: Joi.string().required(),
-        MAIL_PASSWORD: Joi.string().required(),
-
-        JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
-        JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),
-        EMAIL_CONFIRMATION_URL: Joi.string().required(),
+        // MAIL_SERVICE: Joi.string().required(),
+        // MAIL_USER: Joi.string().required(),
+        // MAIL_PASSWORD: Joi.string().required(),
+        // JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
+        // JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+        // EMAIL_CONFIRMATION_URL: Joi.string().required(),
       })
     }),
     DatabaseModule,
@@ -51,7 +49,7 @@ import { MailModule } from './modules/mail/mail.module';
     ImagesHandlerModule,
     CartModule,
     CommandModule,
-    MailModule
+    // MailModule
   ],
   controllers: [
     AppController
