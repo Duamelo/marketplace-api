@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { createTransport } from 'nodemailer';
 import * as Mail from 'nodemailer/lib/mailer';
 import { Repository } from 'typeorm';
+import { TokenPayload } from '../authentication/interfaces/tokenPayload.interfaces';
 import Customer from '../customer/customer.entity';
 
 @Injectable()
@@ -33,10 +34,11 @@ export class MailService {
     }
 
     async sendVerificationLink(userId: string ) {
-        
+      //const payload: TokenPayload = { userId };
       const token = this.jwtService.sign(userId, {
         secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
-        expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}s`
+        expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
+        
       });
     
       const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
