@@ -33,7 +33,7 @@ export class CustomerService {
 
             return { user: client, token: token };
         }
-        throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
+        //throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
     }
 
     async findAll() {
