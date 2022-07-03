@@ -8,7 +8,6 @@ import UpdateCustomerDto from './dto/update-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import { Express } from 'express'
 import { MailService } from '../mail/mail.service';
-// import { MailService } from '../mail/mail.service';
 
 
 @Controller('customer')

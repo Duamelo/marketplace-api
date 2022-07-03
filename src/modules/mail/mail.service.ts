@@ -35,10 +35,9 @@ export class MailService {
 
     async sendVerificationLink(userId: string ) {
       //const payload: TokenPayload = { userId };
-      const token = this.jwtService.sign(userId, {
+      const token = this.jwtService.sign({id: userId}, {
         secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
         expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
-        
       });
     
       const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
