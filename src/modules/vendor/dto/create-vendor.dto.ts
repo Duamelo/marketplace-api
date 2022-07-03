@@ -1,4 +1,5 @@
 import { IsNotEmpty, MinLength, IsEmail } from 'class-validator';
+import Role from 'src/modules/common/roles/role.enum';
 
 class CreateVendorDto {
 
@@ -17,6 +18,9 @@ class CreateVendorDto {
 
     @IsNotEmpty()
     readonly phone: string;
+
+    @IsNotEmpty()
+    readonly role : string = Role.Vendor;
     
     
     @IsNotEmpty()
