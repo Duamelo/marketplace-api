@@ -9,13 +9,13 @@ export class RegisterBaseService {
         private  readonly jwtService: JwtService,
         private readonly configService: ConfigService,
     ){ }
-
+    
     public async generateToken(user){
-        const {firstName, lastName, email, phone, address} = user;
-        const token = await this.jwtService.signAsync({firstName, lastName, email, phone, address});
+        const {firstName, lastName, email, phone, address,role} = user;
+        const token = await this.jwtService.signAsync({firstName, lastName, email, phone, address, role});
         return token;
     }
-
+    
     public async hashPassword(password) {
         const hash = await bcrypt.hash(password, 10);
         return hash;

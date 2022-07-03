@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import DatabaseFileService from '../database-file/database-file.service';
+import { MailService } from '../mail/mail.service';
 import Customer from './customer.entity';
 import UpdateCustomerDto from './dto/update-customer.dto';
 
@@ -18,6 +19,7 @@ export class CustomerService {
         private readonly databaseFilesService: DatabaseFileService,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
+        private readonly mailService: MailService,
         private  connection: Connection
         ){}
 
@@ -38,6 +40,34 @@ export class CustomerService {
             return { user: client, token: token };
         }
         //throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
+    }
+
+    async sendVerificationLink(email: string ) {
+      //const payload: TokenPayload = { userId };
+      const token = this.jwtService.sign({email:email}, {
+        secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
+        expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
+        
+      });
+    
+      // const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
+     
+      const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}customer/token/${token}`;
+
+    
+      const text = `Welcome to ahi marketplace. To confirm the email address, click here: ${url} . \n
+      The link will expire in ${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`;
+      
+      // const user = await this.customerRepository.find({where:{email : email}});
+      // if (user.length != 0) 
+      //   var email = user[0].email;
+
+      return await this.mailService.sendMail({
+        
+        to: email,
+        subject: 'Email confirmation',
+        text,
+      })
     }
 
 
@@ -63,16 +93,18 @@ export class CustomerService {
 
     async findOneByEmail(email: string){
         const customerMail = await this.customerRepository.findOne( {where : {email : `${email}`} });
-        if (customerMail)
+        if (customerMail) {
             return customerMail;
-        // throw new HttpException('Customer email not found', HttpStatus.NOT_FOUND);
+          }
+        throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
     }
 
     async findOneById(id: number) {
         const customer = await this.customerRepository.findOne({ where : { id: id } });
-        if (customer)
+        if (customer) {
             return customer;
-        // throw new HttpException('Customer not found.', HttpStatus.NOT_FOUND);
+          }
+        throw new HttpException('Customer not found.', HttpStatus.NOT_FOUND);
     }
 
 

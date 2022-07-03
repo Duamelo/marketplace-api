@@ -4,9 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createTransport } from 'nodemailer';
 import * as Mail from 'nodemailer/lib/mailer';
-import { Repository } from 'typeorm';
-import { TokenPayload } from '../authentication/interfaces/tokenPayload.interfaces';
-import Customer from '../customer/customer.entity';
+import { User } from '../common/entities/users/base.entity';
 
 @Injectable()
 export class MailService {
@@ -15,8 +13,8 @@ export class MailService {
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-    @InjectRepository(Customer)
-    private readonly customerRepository: Repository <Customer>
+    //@InjectRepository(Customer)
+    //private readonly customerRepository: Repository <Customer>
     )
     
     {
@@ -33,32 +31,36 @@ export class MailService {
         return await this.nodemailerTransport.sendMail(options);
     }
 
-    async sendVerificationLink(email: string ) {
-      //const payload: TokenPayload = { userId };
-      const token = this.jwtService.sign({email:email}, {
-        secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
-        expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
-        
-      });
     
-      // const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
-      const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}${token}`;
+
+    // async sendVerificationLink(email: string ) {
+    //   //const payload: TokenPayload = { userId };
+    //   const token = this.jwtService.sign({email:email}, {
+    //     secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
+    //     expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
+        
+    //   });
+    
+    //   // const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
+     
+    //   console.log(user);
+    //   const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}${user}/token/${token}`;
 
     
-      const text = `Welcome to ahi marketplace. To confirm the email address, click here: ${url} . \n
-      The link will expire in ${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`;
+    //   const text = `Welcome to ahi marketplace. To confirm the email address, click here: ${url} . \n
+    //   The link will expire in ${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`;
       
-      // const user = await this.customerRepository.find({where:{email : email}});
-      // if (user.length != 0) 
-      //   var email = user[0].email;
+    //   // const user = await this.customerRepository.find({where:{email : email}});
+    //   // if (user.length != 0) 
+    //   //   var email = user[0].email;
 
-      return await this.sendMail({
+    //   return await this.sendMail({
         
-        to: email,
-        subject: 'Email confirmation',
-        text,
-      })
-    }
+    //     to: email,
+    //     subject: 'Email confirmation',
+    //     text,
+    //   })
+    // }
 
     
 }
