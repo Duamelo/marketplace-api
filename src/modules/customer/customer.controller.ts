@@ -8,6 +8,8 @@ import UpdateCustomerDto from './dto/update-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import { Express } from 'express'
 import { MailService } from '../mail/mail.service';
+import ConfirmEmailDto from '../mail/dto/confirm-email.dto';
+import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 // import { MailService } from '../mail/mail.service';
 
 
@@ -16,7 +18,8 @@ export class CustomerController {
 
     constructor(
         private customerService: CustomerService,
-        private readonly mailService: MailService
+        private registerBaseService: RegisterBaseService,
+        private mailService: MailService
         ){}
 
     @HttpCode(200)
@@ -26,6 +29,18 @@ export class CustomerController {
         const user = await this.customerService.create(customer);
         await this.mailService.sendVerificationLink(customer.email);
         return user;
+    }
+
+    // @Post('confirm')
+    // async confirm(@Body() confirmationData: ConfirmEmailDto) {
+    //   const email = await this.customerService.decodeConfirmationToken(confirmationData.token);
+    //   await this.customerService.confirmEmail(email);
+    // }
+    @Get('/token/:token')
+    async confirm(@Param('token') token:string, @Req() req, @Res() res) {
+      const email = await this.registerBaseService.decodeConfirmationToken(token);
+      await this.customerService.confirmEmail(email);
+      return res.send('Email ' + email + ' Confirmé');
     }
 
     @Post('avatar')

@@ -30,30 +30,35 @@ export class MailService {
     }
  
     async sendMail(options: Mail.Options) {
-        return this.nodemailerTransport.sendMail(options);
+        return await this.nodemailerTransport.sendMail(options);
     }
 
-    async sendVerificationLink(userId: string ) {
+    async sendVerificationLink(email: string ) {
       //const payload: TokenPayload = { userId };
-      const token = this.jwtService.sign(userId, {
+      const token = this.jwtService.sign({email:email}, {
         secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
         expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
         
       });
     
-      const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
-    
-      const text = `Welcome to the application. To confirm the email address, click here: ${url}`;
-      
-      const user = await this.customerRepository.find({where:{id : Number(userId)}});
-      if (user.length != 0) 
-        var email = user[0].email;
+      // const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
+      const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}${token}`;
 
-      return this.sendMail({
+    
+      const text = `Welcome to ahi marketplace. To confirm the email address, click here: ${url} . \n
+      The link will expire in ${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`;
+      
+      // const user = await this.customerRepository.find({where:{email : email}});
+      // if (user.length != 0) 
+      //   var email = user[0].email;
+
+      return await this.sendMail({
         
         to: email,
         subject: 'Email confirmation',
         text,
       })
     }
+
+    
 }

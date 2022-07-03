@@ -1,4 +1,6 @@
-import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
@@ -14,6 +16,8 @@ export class CustomerService {
         private readonly customerRepository: Repository<Customer>,
         private readonly registerBaseService: RegisterBaseService,
         private readonly databaseFilesService: DatabaseFileService,
+        private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
         private  connection: Connection
         ){}
 
@@ -35,6 +39,23 @@ export class CustomerService {
         }
         //throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
     }
+
+
+    async markEmailAsConfirmed(email: string) {
+        return this.customerRepository.update({ email }, {
+          isEmailConfirmed: true
+        });
+      }
+
+    public async confirmEmail(email: string) {
+        const user = await this.findOneByEmail(email);
+        if (user.isEmailConfirmed) {
+          throw new BadRequestException('Email already confirmed');
+        }
+        await this.markEmailAsConfirmed(email);
+      }
+
+      
 
     async findAll() {
         return await this.customerRepository.find();
