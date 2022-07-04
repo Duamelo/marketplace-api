@@ -15,7 +15,7 @@ export class CommandService implements ICommand{
         this.commandReceiver = commandReceiver;
     }
 
-    public execute() {
-        this.commandReceiver.execute(this.orderCommand);
+    public async execute() {
+        return await this.commandReceiver.execute(this.orderCommand);
     }
 }

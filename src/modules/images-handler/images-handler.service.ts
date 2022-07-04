@@ -27,9 +27,8 @@ export class ImagesHandlerService {
 
     async getFileById(fileId: number) {
         const file = await this.imageHandlerRepository.findOne({where: {id: fileId}});
-        if (!file) {
+        if (!file)
           throw new NotFoundException();
-        }
         return file;
     }
 }

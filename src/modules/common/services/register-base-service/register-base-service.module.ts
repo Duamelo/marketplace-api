@@ -5,6 +5,7 @@ import RegisterBaseService from './register-base-service';
 
 @Module({
     imports: [
+      ConfigModule,
       JwtModule.registerAsync({
         imports: [ConfigModule],
         inject: [ConfigService],

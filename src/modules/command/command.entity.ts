@@ -7,8 +7,6 @@ export class Command {
     @PrimaryGeneratedColumn()
     id: number;
 
-
-    
     @OneToOne (() => Cart)
     @JoinColumn()
     orderItems : Cart;
@@ -18,7 +16,6 @@ export class Command {
 
     @Column()
     status :  string;
-
 
     @Column()
     shippingAddress: string;

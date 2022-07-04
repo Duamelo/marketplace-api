@@ -1,7 +1,6 @@
 import { IsNotEmpty, MinLength, IsEmail } from 'class-validator';
-import Role from 'src/modules/common/roles/role.enum';
 
-class UpdateCustomerDto {
+class UpdateVendorDto {
     @IsNotEmpty({message: 'Nom requis svp'})
     readonly firstName: string;
 
@@ -17,7 +16,6 @@ class UpdateCustomerDto {
 
     @IsNotEmpty({message: 'Numéro de teléphone requis svp'})
     readonly phone: string;
-
     
     
     @IsNotEmpty({message: 'Adresse requis svp'})
@@ -30,4 +28,4 @@ class UpdateCustomerDto {
     })
     password: string;
 }
-export default UpdateCustomerDto;
+export default UpdateVendorDto;

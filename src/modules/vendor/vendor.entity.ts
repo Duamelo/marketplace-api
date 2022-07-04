@@ -4,7 +4,6 @@ import Shop from '../shop/shop.entity';
 
 @Entity({ name: 'vendor' })
 export class Vendor extends User{
-
     @OneToMany(() => Shop, (shop) => shop.vendor)
     shops: Shop[];
 }

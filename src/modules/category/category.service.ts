@@ -37,7 +37,7 @@ export class CategoryService {
     async update(id : number, category: CategoryDto ){
         const categoryExist = await this.categoryRepository.find({where: {id: id}});
 
-        if(categoryExist)
+        if(categoryExist.length != 0)
             return await this.categoryRepository.update(id, category);
         throw new NotFoundException('this category does not exist');
     }
@@ -45,7 +45,7 @@ export class CategoryService {
     async findOneByName(categoryName){
         const categoryExist = await this.categoryRepository.find({where : {name : categoryName}});
 
-        if(categoryExist)
+        if(categoryExist.length != 0)
             return categoryExist;
         throw new NotFoundException('this category does not exist');
     }
@@ -53,7 +53,7 @@ export class CategoryService {
     async findOneById(categoryId: number){
         const categoryExist = await this.categoryRepository.find({where : {id : categoryId}});
 
-        if(categoryExist)
+        if(categoryExist.length != 0)
             return categoryExist;
         throw new NotFoundException('this category does not exist');
     }

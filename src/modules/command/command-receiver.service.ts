@@ -57,14 +57,10 @@ export class CommandReceiver {
                 });
             }
         }
-
-     
     }
 
 
-    public undo(){
-
-    }
+    public async undo(){}
 
     public async findAll(){
         return await this.commandRepository.find();
@@ -76,14 +72,14 @@ export class CommandReceiver {
 
     public async delete(orderId : number){
         const orderExist = await this.commandRepository.find({where: {id: orderId}});
-        if(orderExist)
+        if(orderExist.length != 0)
             return await this.commandRepository.delete(orderId);
     }
 
     public async update(orderId : number, order : any){
         const orderExist = await this.commandRepository.find({where: {id: orderId}});
 
-        if(orderExist)
+        if(orderExist.length != 0)
             return await this.commandRepository.update(orderId, order);
     }
 }

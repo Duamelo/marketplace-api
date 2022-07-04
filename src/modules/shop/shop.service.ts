@@ -17,8 +17,8 @@ export class ShopService {
         var shopExist = await this.shopRepository.find({where: {name: shop.name}});
 
         if(shopExist.length > 0)
-            return "this name shop already exist. Please give another name to your shop";
-        
+            throw new HttpException("this name shop already exist. Please give another name to your shop", HttpStatus.NOT_FOUND);
+            
         const rest : ShopDto = shop;
 
         const newShop = await this.shopRepository.create({

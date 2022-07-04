@@ -1,8 +1,11 @@
-import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import DatabaseFileService from '../database-file/database-file.service';
+import { MailService } from '../mail/mail.service';
 import Customer from './customer.entity';
 import UpdateCustomerDto from './dto/update-customer.dto';
 
@@ -14,6 +17,9 @@ export class CustomerService {
         private readonly customerRepository: Repository<Customer>,
         private readonly registerBaseService: RegisterBaseService,
         private readonly databaseFilesService: DatabaseFileService,
+        private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
+        private readonly mailService: MailService,
         private  connection: Connection
         ){}
 
@@ -33,30 +39,67 @@ export class CustomerService {
 
             return { user: client, token: token };
         }
-        //throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
+        throw new HttpException('Customer email already exist', HttpStatus.NOT_FOUND);
     }
 
-    async findAll() {
+    async sendVerificationLink(email: string ) {
+      const token = this.jwtService.sign({email:email}, {
+        secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
+        expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
+      });
+    
+      const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}/customer/token/${token}`;
+
+      const text = `Welcome to ahi marketplace. To confirm the email address, click here: ${url} . \n
+      The link will expire in ${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`;
+
+      return await this.mailService.sendMail({
+        to: email,
+        subject: 'Email confirmation',
+        text,
+      });
+    }
+
+
+    public async markEmailAsConfirmed(email: string) {
+        return this.customerRepository.update({ email }, {
+          isEmailConfirmed: true
+        });
+      }
+
+    public async confirmEmail(email: string) {
+        const user = await this.findOneByEmail(email);
+        if (user.isEmailConfirmed) {
+          throw new BadRequestException('Email already confirmed');
+        }
+        await this.markEmailAsConfirmed(email);
+      }
+
+      
+
+    public async findAll() {
         return await this.customerRepository.find();
     }
 
-    async findOneByEmail(email: string){
+    public async findOneByEmail(email: string){
         const customerMail = await this.customerRepository.findOne( {where : {email : `${email}`} });
-        if (customerMail)
+        if (customerMail) {
             return customerMail;
-        // throw new HttpException('Customer email not found', HttpStatus.NOT_FOUND);
+          }
+        throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
     }
 
-    async findOneById(id: number) {
+    public async findOneById(id: number) {
         const customer = await this.customerRepository.findOne({ where : { id: id } });
-        if (customer)
+        if (customer) {
             return customer;
-        // throw new HttpException('Customer not found.', HttpStatus.NOT_FOUND);
+          }
+        throw new HttpException('Customer not found.', HttpStatus.NOT_FOUND);
     }
 
 
     /* I don't understand this method*/
-    async update(id: number, post: UpdateCustomerDto) {
+    public async update(id: number, post: UpdateCustomerDto) {
         //verifier que l'id est dans la bd
         const user = await this.customerRepository.find({where : {id: id}});
 
@@ -102,7 +145,7 @@ export class CustomerService {
         throw new HttpException ('Customer not found', HttpStatus.NOT_FOUND);
     }
 
-    async addAvatar(userId: number, imageBuffer: Buffer, filename: string, mimetype: string) {
+    public async addAvatar(userId: number, imageBuffer: Buffer, filename: string, mimetype: string) {
         const queryRunner = this.connection.createQueryRunner();
      
         await queryRunner.connect();
@@ -135,7 +178,7 @@ export class CustomerService {
     }
 
 
-    async delete(id: number) {
+    public async delete(id: number) {
         const user = await this.customerRepository.find({where : {id: id}});
 
         if (user.length != 0){
