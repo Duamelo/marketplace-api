@@ -27,8 +27,6 @@ export class DatabaseFileService {
             throw new NotFoundException();
         }
     }
-     
-
 
     async uploadDatabaseFile(dataBuffer: Buffer, filename: string, mimetype: string) {
         const newFile = await this.databaseFilesRepository.create({
@@ -38,14 +36,14 @@ export class DatabaseFileService {
         })
         await this.databaseFilesRepository.save(newFile);
         return newFile;
-      }
+    }
      
-      async getFileById(fileId: number) {
-        const file = await this.databaseFilesRepository.findOne({where: {id: fileId}});
-        if (!file) {
-          throw new NotFoundException();
-        }
-        return file;
+    async getFileById(fileId: number) {
+      const file = await this.databaseFilesRepository.findOne({where: {id: fileId}});
+      if (!file) {
+        throw new NotFoundException();
       }
+      return file;
+    }
 }
 export default DatabaseFileService;

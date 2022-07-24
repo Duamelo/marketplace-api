@@ -6,7 +6,7 @@ import { CommandUndoService } from './command.undo.service';
 import CreateOrderDto from './dto/create-order.dto';
 import { Invoker } from './invoker.service';
 
-@Controller('command')
+@Controller('commands')
 export class CommandController {
     private buyTheBasket;
     private undo ;
@@ -31,7 +31,7 @@ export class CommandController {
 
     @HttpCode(200)
     @UseGuards(JwtAuthenticationGuard)
-    @Get('all')
+    @Get()
     async getAllCommands(){
         return await this.receiver.findAll();
     }
@@ -39,21 +39,21 @@ export class CommandController {
 
     @HttpCode(200)
     @UseGuards(JwtAuthenticationGuard)
-    @Get('id')
+    @Get(':id')
     async getCommandById(@Param() id : number){
         return await this.receiver.findOneById(id);
     }
 
     @HttpCode(200)
     @UseGuards(JwtAuthenticationGuard)
-    @Delete('id')
+    @Delete(':id')
     async delete(@Param() id : number){
         return await this.receiver.delete(id);
     }
 
     @HttpCode(200)
     @UseGuards(JwtAuthenticationGuard)
-    @Put('orderId')
+    @Put(':orderId')
     async updateOrder(@Param() orderId : number, @Body() order : any){
         return await this.receiver.update(orderId, order);
     }

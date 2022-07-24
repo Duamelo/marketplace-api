@@ -83,18 +83,14 @@ export class CustomerService {
 
     public async findOneByEmail(email: string){
         const customerMail = await this.customerRepository.findOne( {where : {email : `${email}`} });
-        if (customerMail) {
+        if (customerMail)
             return customerMail;
-          }
-        throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
     }
 
     public async findOneById(id: number) {
         const customer = await this.customerRepository.findOne({ where : { id: id } });
-        if (customer) {
+        if (customer)
             return customer;
-          }
-        throw new HttpException('Customer not found.', HttpStatus.NOT_FOUND);
     }
 
 

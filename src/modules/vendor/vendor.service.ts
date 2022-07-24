@@ -47,7 +47,7 @@ export class VendorService {
         expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`,
       });
     
-      const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}/vendor/token/${token}`;
+      const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}/vendors/token/${token}`;
     
       const text = `Welcome to ahi marketplace. To confirm the email address, click here: ${url} . \n
       The link will expire in ${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}`;
@@ -79,10 +79,8 @@ export class VendorService {
     
   public async findOneByEmail(email: string){
     const vendorMail = await this.vendorRepository.findOne( {where : {email : `${email}`}, relations : {shops : true} });
-    if (vendorMail) {
+    if (vendorMail)
         return vendorMail;
-    }
-    throw new HttpException('Vendor not found', HttpStatus.NOT_FOUND);
   }
 
 

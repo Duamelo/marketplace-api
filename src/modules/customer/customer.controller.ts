@@ -1,20 +1,17 @@
 import { Controller, Body, Post, UseGuards, HttpCode, Req, Res, Get, Delete, Param, UseInterceptors, UploadedFile, Put, ValidationPipe, UsePipes } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
-import { DoesUserExist } from '../common/guards/doesUserExist.guard';
 import { CustomerService } from './customer.service';
 import CreateCustomerDto from './dto/create-customer.dto';
 import UpdateCustomerDto from './dto/update-customer.dto';
 import RequestWithCustomer from './interfaces/requestWithCustomer.interfaces';
 import { Express } from 'express'
-import { MailService } from '../mail/mail.service';
-import ConfirmEmailDto from '../mail/dto/confirm-email.dto';
 import RegisterBaseService from '../common/services/register-base-service/register-base-service';
 import { Roles } from '../common/roles/role.decorator';
 import Role from '../common/roles/role.enum';
 
 
-@Controller('customer')
+@Controller('customers')
 export class CustomerController {
 
     constructor(
@@ -25,7 +22,7 @@ export class CustomerController {
     @HttpCode(200)
     //@UseGuards(DoesUserExist)
     @UsePipes(new ValidationPipe({transform:true}))
-    @Post('register')
+    @Post()
     async register(@Body() customer: CreateCustomerDto) {
         const user = await this.customerService.create(customer);
         await this.customerService.sendVerificationLink(customer.email);
@@ -48,7 +45,7 @@ export class CustomerController {
 
     @HttpCode(200)
     @Roles(Role.Admin)
-    @Get('all')
+    @Get()
     async getAllCustomers(){
         return await this.customerService.findAll();
     }

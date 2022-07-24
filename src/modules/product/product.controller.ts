@@ -26,7 +26,7 @@ export class ProductController {
 
     @HttpCode(200)
     @UseGuards(JwtAuthenticationGuard)
-    @Get('shop/:shopId/:productId')
+    @Get(':productId/shops/:shopId')
     async getProductByIdAndShop(@Param('productId', ParseIntPipe) productId : number, @Param('shopId', ParseIntPipe) shopId : number){
         return await this.productService.findOneByIdAndShop(productId, shopId);
     }

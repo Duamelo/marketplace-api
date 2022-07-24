@@ -11,42 +11,42 @@ export class CategoryController {
 
     @HttpCode (200)
     @UseGuards(JwtAuthenticationGuard)
-    @Post('create')
+    @Post()
     async create(@Body() category: CategoryDto){
         return await this.categoryService.create(category);
     }
 
     @HttpCode (200)
     @UseGuards(JwtAuthenticationGuard)
-    @Get('all')
+    @Get()
     async getAllCategories(){
         return await this.categoryService.findAll();
     }
 
     @HttpCode (200)
     @UseGuards(JwtAuthenticationGuard)
-    @Delete('id')
+    @Delete(':id')
     async delete(@Param() id : number){
         return await this.categoryService.delete(id);
     }
 
     @HttpCode (200)
     @UseGuards(JwtAuthenticationGuard)
-    @Put('id')
+    @Put(':id')
     async update( @Param() id : number ,@Body() category: CategoryDto){
         return await this.categoryService.update(id, category);
     }
 
     @HttpCode (200)
     @UseGuards(JwtAuthenticationGuard)
-    @Get('id')
+    @Get(':id')
     async getCategoryById(@Param() id: number){
         return await this.categoryService.findOneById(id);
     }
 
     @HttpCode (200)
     @UseGuards(JwtAuthenticationGuard)
-    @Get('name')
+    @Get(':name')
     async getCategoryByName(@Param() name: number){
         return await this.categoryService.findOneByName(name);
     }

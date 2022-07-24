@@ -25,8 +25,15 @@ export class ImagesHandlerService {
         return newImage;
     }
 
-    async getFileById(fileId: number) {
-        const file = await this.imageHandlerRepository.findOne({where: {id: fileId}});
+    async getFileById(productId: number) {
+        const file = await this.imageHandlerRepository.find({
+            where: {
+                product: {
+                    id: productId
+                }
+            }
+        });
+        console.log(file);
         if (!file)
           throw new NotFoundException();
         return file;

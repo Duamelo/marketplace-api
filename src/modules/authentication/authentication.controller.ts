@@ -23,7 +23,7 @@ export class AuthenticationController {
 
     @UseGuards(AuthGuard('local'))
     @Post('login')
-    async login(@Req() request: RequestWithCustomer | RequestWithVendor, @Res() response: Response)
+    async login(@Req() request: RequestWithVendor | RequestWithCustomer , @Res() response: Response)
     {
         const { user } = request;
         const cookie = this.authService.getCookieWithJwtToken(user.id);

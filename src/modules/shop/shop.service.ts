@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import Product from '../product/product.entity';
 import CreateShopDto from './dto/create-shop.dto';
 import ShopDto from './dto/shop.dto';
 import Shop from './shop.entity';
@@ -10,7 +11,9 @@ import Shop from './shop.entity';
 export class ShopService {
     constructor(
         @InjectRepository(Shop)
-        private readonly shopRepository: Repository<Shop>
+        private readonly shopRepository: Repository<Shop>,
+        @InjectRepository(Product)
+        private readonly productRepository: Repository<Product>
     ){}
 
     async create(shop: CreateShopDto, vendorId: any){
@@ -39,6 +42,16 @@ export class ShopService {
             relations : {
                 products : true,
                 vendor : true
+            }
+        });
+    }
+
+    async findProductsByShop(shopId: number){
+        return await this.productRepository.find({
+            where : {
+                shop : {
+                    id: shopId
+                }
             }
         });
     }

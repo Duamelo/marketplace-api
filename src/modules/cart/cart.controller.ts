@@ -3,7 +3,7 @@ import JwtAuthenticationGuard from '../authentication/jwt.authentication.guard';
 import { CartService } from './cart.service';
 import CreateCartDto from './dto/create-cart.dto';
 
-@Controller('cart')
+@Controller('carts')
 export class CartController {
     constructor(
         private readonly cartService: CartService

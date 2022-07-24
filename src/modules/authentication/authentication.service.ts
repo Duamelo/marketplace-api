@@ -28,7 +28,7 @@ export class AuthenticationService {
 
         // find if customer or vendor password match
         const match = await this.comparePassword(pass, customer ? customer.password : vendor.password);
-        
+
         if (!match)
             return null;
 
